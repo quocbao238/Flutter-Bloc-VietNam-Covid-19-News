@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ThemePrimary {
-  static Color primaryColor = Color(0xFFFE3C5B);
+  static Color primaryColor = Color(0xFF279E97);
   static Color scaffoldBackgroundColor = Color(0xFFF5F5F5);
   static Color accentColor = Color(0xFFe84545);
   static Color backgroundColor = Color(0xFFFFFFFF);
@@ -12,9 +13,16 @@ class ThemePrimary {
   static ThemeData theme() {
     return ThemeData(
       primaryColor: primaryColor,
-      scaffoldBackgroundColor: scaffoldBackgroundColor,
-      accentColor: accentColor,
-      backgroundColor: backgroundColor,
+      // scaffoldBackgroundColor: scaffoldBackgroundColor,
+      // accentColor: accentColor,
+      // backgroundColor: backgroundColor,
+      // appBarTheme: AppBarTheme(
+      //   systemOverlayStyle: SystemUiOverlayStyle(
+      //       statusBarBrightness: Brightness.dark, // For iOS: (dark icons)
+      //       statusBarIconBrightness:
+      //           Brightness.dark, // For Android: (dark icons)
+      //       statusBarColor: Colors.red),
+      // ),
       fontFamily: fontFamily,
       textTheme: TextTheme(
         headline1: TextStyle(

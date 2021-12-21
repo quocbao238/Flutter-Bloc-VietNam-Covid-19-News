@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vietnamcovidtracking/source/pages/tab_page/view/tabs_page.dart';
 
 class AppRoutes {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -9,8 +10,11 @@ class AppRoutes {
           builder: (_) => TabsPage(),
           settings: RouteSettings(name: TabsPage.routeName),
         );
-      case HomeScreen.routeName:
-        return TabsPage.route();
+      case TabsPage.routeName:
+        return MaterialPageRoute(
+          builder: (_) => TabsPage(),
+          settings: RouteSettings(name: TabsPage.routeName),
+        );
 
       // case LocationScreen.routeName:
       //   return LocationScreen.route();
