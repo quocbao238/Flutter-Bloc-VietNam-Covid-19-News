@@ -9,10 +9,13 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  flutter_bloc: ^7.0.0
-  equatable:  ^2.0.0
+  flutter_bloc: 8.0.0
+  equatable:  ^2.0.3
   http: ^0.13.0
   line_icons: ^2.0.1
+  flutter_snake_navigationbar: ^0.5.0
+  flutter_svg: ^0.22.0
+
 
 
 
@@ -36,6 +39,7 @@ flutter:
   assets:
     - assets/
     - assets/icons/
+    - assets/svg/
     - assets/fonts/BeFonts/
   #   - images/a_dot_ham.jpeg
 

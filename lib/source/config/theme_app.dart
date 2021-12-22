@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ThemePrimary {
   static Color primaryColor = Color(0xFF279E97);
@@ -10,30 +9,31 @@ class ThemePrimary {
   static String fontFamily = "BeFonts";
   static Color textPrimaryColor = Color(0xFF2b2e4a);
 
+  static Color green = Color(0xFF4CD97B);
+  static Color orange = Color(0xFFFFB259);
   static ThemeData theme() {
     return ThemeData(
       primaryColor: primaryColor,
-      // scaffoldBackgroundColor: scaffoldBackgroundColor,
-      // accentColor: accentColor,
-      // backgroundColor: backgroundColor,
-      // appBarTheme: AppBarTheme(
-      //   systemOverlayStyle: SystemUiOverlayStyle(
-      //       statusBarBrightness: Brightness.dark, // For iOS: (dark icons)
-      //       statusBarIconBrightness:
-      //           Brightness.dark, // For Android: (dark icons)
-      //       statusBarColor: Colors.red),
-      // ),
+      scaffoldBackgroundColor: scaffoldBackgroundColor,
+      accentColor: accentColor,
+      backgroundColor: backgroundColor,
       fontFamily: fontFamily,
       textTheme: TextTheme(
         headline1: TextStyle(
             color: textPrimaryColor, fontWeight: FontWeight.bold, fontSize: 24),
         headline2: TextStyle(
             color: textPrimaryColor, fontWeight: FontWeight.bold, fontSize: 20),
+        headline3: TextStyle(
+            color: textPrimaryColor, fontWeight: FontWeight.bold, fontSize: 16),
         bodyText1: TextStyle(
             color: textPrimaryColor,
             fontWeight: FontWeight.normal,
-            fontSize: 14),
+            fontSize: 16),
         bodyText2: TextStyle(
+            color: textPrimaryColor,
+            fontWeight: FontWeight.normal,
+            fontSize: 14),
+        subtitle2: TextStyle(
             color: textPrimaryColor,
             fontWeight: FontWeight.normal,
             fontSize: 12),

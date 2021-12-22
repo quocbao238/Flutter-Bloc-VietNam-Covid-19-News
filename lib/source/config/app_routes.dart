@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vietnamcovidtracking/source/pages/tab_page/view/tabs_page.dart';
+import 'package:vietnamcovidtracking/source/pages/tabs/view/tabs_page.dart';
 
 class AppRoutes {
   static Route onGenerateRoute(RouteSettings settings) {
