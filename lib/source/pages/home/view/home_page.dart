@@ -27,8 +27,8 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 30, color: Colors.white),
-              SizedBox(width: 8.0),
+              Icon(icon, size: 24, color: Colors.white),
+              const SizedBox(width: 4.0),
               Text(
                 title,
                 style: Theme.of(context)
@@ -39,11 +39,13 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           style: ButtonStyle(
+            fixedSize: MaterialStateProperty.all(
+                Size(MediaQuery.of(context).size.width * 0.45, 54)),
             padding: MaterialStateProperty.all(
-                EdgeInsets.only(left: 24, right: 24, top: 12, bottom: 12)),
+                const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 12)),
             backgroundColor:
                 MaterialStateProperty.all(backgroundcolor), //Background Color
-            elevation: MaterialStateProperty.all(3), //Defines Elevation
+            elevation: MaterialStateProperty.all(6), //Defines Elevation
             shadowColor: MaterialStateProperty.all(Colors.grey), //Define
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
@@ -56,13 +58,13 @@ class _HomePageState extends State<HomePage> {
       }
 
       return Container(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
             left: SizeApp.normalPadding,
             right: SizeApp.normalPadding,
             bottom: SizeApp.normalPadding),
         decoration: BoxDecoration(
             color: ThemePrimary.primaryColor,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
                 bottomLeft: Radius.circular(50),
                 bottomRight: Radius.circular(50))),
         child: Column(
@@ -76,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                   .headline1!
                   .copyWith(color: Colors.white),
             ),
-            SizedBox(height: SizeApp.normalPadding * 2),
+            const SizedBox(height: SizeApp.normalPadding),
             Text(
               "Bạn có cảm thấy như bị bệnh không?",
               style: Theme.of(context)
@@ -84,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                   .headline2!
                   .copyWith(color: Colors.white),
             ),
-            SizedBox(height: SizeApp.normalPadding),
+            const SizedBox(height: SizeApp.normalPadding),
             Text(
               "Nếu bạn cảm thấy bị bệnh với bất kỳ triệu chứng Covid-19 nào, vui lòng gọi hoặc nhắn tin SMS cho chúng tôi ngay lập tức để được giúp đỡ",
               style: Theme.of(context)
@@ -92,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                   .bodyText2!
                   .copyWith(color: Colors.white),
             ),
-            SizedBox(height: SizeApp.normalPadding),
+            const SizedBox(height: SizeApp.normalPadding),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -101,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                     icon: Icons.phone,
                     backgroundcolor: ThemePrimary.green,
                     onTap: () {}),
-                SizedBox(width: 16.0),
+                // const SizedBox(width: 16.0),
                 _btnCallSms(
                     title: "Gửi tin nhắn",
                     backgroundcolor: ThemePrimary.orange,
@@ -109,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {})
               ],
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
           ],
         ),
       );
@@ -118,14 +120,12 @@ class _HomePageState extends State<HomePage> {
     Widget _center() {
       Widget __preventionItem({required String title, required String svgUrl}) {
         return Expanded(
+          // width: MediaQuery.of(context).size.width / 3,
+          // height: MediaQuery.of(context).size.width / 3,
           child: Column(
-            // crossAxisAlignment: CrossAxisAlignment.center,
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Expanded(
-                  child: Container(
-                      child: SvgPicture.asset(svgUrl, fit: BoxFit.fill))),
-              SizedBox(height: SizeApp.paddingTxt),
+              SvgPicture.asset(svgUrl, fit: BoxFit.fill),
+              const SizedBox(height: SizeApp.paddingTxt),
               Text(title,
                   textAlign: TextAlign.center,
                   maxLines: 2,
@@ -138,58 +138,54 @@ class _HomePageState extends State<HomePage> {
         );
       }
 
-      return Expanded(
-        child: Container(
-          padding: EdgeInsets.all(SizeApp.normalPadding),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text("Phòng ngừa", style: Theme.of(context).textTheme.headline2!),
-              SizedBox(height: SizeApp.normalPadding + 8),
-              Container(
-                // height: MediaQuery.of(context).size.width / 3,
-                constraints: BoxConstraints(
-                    maxHeight: MediaQuery.of(context).size.width / 2.8),
-                // color: Colors.red,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    __preventionItem(
-                      title: "Tránh tiếp xúc gần",
-                      svgUrl: "assets/svg/avoidclosecontact.svg",
-                    ),
-                    __preventionItem(
-                      title: "Làm sạch tay thường xuyên",
-                      svgUrl: "assets/svg/cleanhands.svg",
-                    ),
-                    __preventionItem(
-                      title: "Luôn mang khẩu trang",
-                      svgUrl: "assets/svg/facemask.svg",
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+      return Container(
+        padding: const EdgeInsets.all(SizeApp.normalPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text("Phòng ngừa", style: Theme.of(context).textTheme.headline2!),
+            const SizedBox(height: SizeApp.normalPadding + 8),
+            SizedBox(
+              // height: MediaQuery.of(context).size.width / 3,
+              width: MediaQuery.of(context).size.width,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  __preventionItem(
+                    title: "Tránh tiếp xúc gần",
+                    svgUrl: "assets/svg/avoidclosecontact.svg",
+                  ),
+                  __preventionItem(
+                    title: "Làm sạch tay thường xuyên",
+                    svgUrl: "assets/svg/cleanhands.svg",
+                  ),
+                  __preventionItem(
+                    title: "Luôn mang khẩu trang",
+                    svgUrl: "assets/svg/facemask.svg",
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       );
     }
 
     Widget _bottom() {
       return Container(
-        height: MediaQuery.of(context).size.height * 0.2,
-        padding: EdgeInsets.all(SizeApp.normalPadding),
+        // height: MediaQuery.of(context).size.height * 0.2,
+        padding: const EdgeInsets.symmetric(horizontal: SizeApp.normalPadding),
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 24.0),
+              margin: const EdgeInsets.only(top: 24.0),
               padding: EdgeInsets.only(
                   left: MediaQuery.of(context).size.height * 0.18,
                   right: SizeApp.normalPadding,
-                  top: SizeApp.paddingTxt,
-                  bottom: SizeApp.paddingTxt),
+                  top: SizeApp.normalPadding,
+                  bottom: SizeApp.normalPadding),
               decoration: BoxDecoration(
                   // color: ThemePrimary.primaryColor,
                   gradient: LinearGradient(colors: [
@@ -197,28 +193,26 @@ class _HomePageState extends State<HomePage> {
                     ThemePrimary.primaryColor.withOpacity(0.4)
                   ], begin: Alignment.topRight, end: Alignment.bottomLeft),
                   borderRadius: BorderRadius.circular(25)),
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Bạn đã sẵn sàng?",
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline2!
-                          .copyWith(color: Colors.white),
-                    ),
-                    SizedBox(height: SizeApp.paddingTxt),
-                    Text(
-                      "Chung sức vì cộng đồng vượt qua đại dịch",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2!
-                          .copyWith(color: Colors.white),
-                    ),
-                  ],
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Bạn đã sẵn sàng?",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline2!
+                        .copyWith(color: Colors.white),
+                  ),
+                  // const SizedBox(height: 4),
+                  Text(
+                    "Chung sức vì cộng đồng vượt qua đại dịch",
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(color: Colors.white),
+                  ),
+                ],
               ),
             ),
             Positioned(
@@ -237,7 +231,6 @@ class _HomePageState extends State<HomePage> {
     }
 
     return Scaffold(
-      // appBar: AppBar(elevation: 0),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,

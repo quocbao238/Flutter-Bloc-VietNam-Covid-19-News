@@ -55,21 +55,22 @@ class _TabsPageState extends State<TabsPage> {
       create: (context) => TabPageBloc(),
       child: BlocBuilder<TabPageBloc, TabPageState>(
         builder: (context, state) {
-          print("index : ${state.index}");
           return Scaffold(
             key: _tabsKey,
             appBar: AppBar(
+              backgroundColor: ThemePrimary.primaryColor,
               elevation: 0,
               leading: IconButton(
-                icon: Icon(LineIcons.equals),
+                icon: const Icon(LineIcons.equals),
                 onPressed: () => _tabsKey.currentState!.openDrawer(),
               ),
               actions: [
                 IconButton(
-                    icon: Icon(LineIcons.bell, size: 30.0), onPressed: () {})
+                    icon: const Icon(LineIcons.bell, size: 30.0),
+                    onPressed: () {})
               ],
             ),
-            drawer: Drawer(),
+            drawer: const Drawer(),
             body: _body(state, context),
             bottomNavigationBar: _bottomNavigationBar(state, context),
           );

@@ -12,6 +12,6 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Text("NewsPage"));
+    return const Scaffold(body: Text("NewsPage"));
   }
 }

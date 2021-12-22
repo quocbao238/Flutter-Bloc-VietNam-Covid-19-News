@@ -3,17 +3,17 @@ import 'package:vietnamcovidtracking/source/pages/tabs/view/tabs_page.dart';
 
 class AppRoutes {
   static Route onGenerateRoute(RouteSettings settings) {
-    print('Route: ${settings.name}');
+    debugPrint('onGenerateRoute: ${settings.name}');
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (_) => TabsPage(),
-          settings: RouteSettings(name: TabsPage.routeName),
+          builder: (_) => const TabsPage(),
+          settings: const RouteSettings(name: TabsPage.routeName),
         );
       case TabsPage.routeName:
         return MaterialPageRoute(
-          builder: (_) => TabsPage(),
-          settings: RouteSettings(name: TabsPage.routeName),
+          builder: (_) => const TabsPage(),
+          settings: const RouteSettings(name: TabsPage.routeName),
         );
 
       // case LocationScreen.routeName:

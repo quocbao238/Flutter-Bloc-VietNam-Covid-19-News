@@ -6,9 +6,9 @@ import 'source/my_bloc_observer.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   BlocOverrides.runZoned(
-    () =>  runApp(MyApp()),
+    () => runApp(const MyApp()),
     blocObserver: MyBlocObserver(),
   );
 }

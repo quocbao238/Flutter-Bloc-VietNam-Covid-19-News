@@ -61,9 +61,6 @@ flutter:
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
-      - family: VnCovidIcon
-        fonts:   
-          - asset: assets/icons/VnCovidIcon.ttf
       - family: BeFonts
         fonts:    
           - asset: assets/fonts/BeFonts/BeVietnam-Thin.ttf

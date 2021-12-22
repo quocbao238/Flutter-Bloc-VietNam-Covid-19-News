@@ -5,7 +5,7 @@ part 'tabpage_event.dart';
 part 'tabpage_state.dart';
 
 class TabPageBloc extends Bloc<TabPageEvent, TabPageState> {
-  TabPageBloc() : super(TabPageState(index: 0)) {
+  TabPageBloc() : super(const TabPageState(index: 0)) {
     on<ChangeTabEvent>(_onChangeTabPage);
   }
 

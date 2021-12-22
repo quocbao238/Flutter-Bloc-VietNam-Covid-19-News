@@ -11,6 +11,6 @@ class VaccinationPage extends StatefulWidget {
 class _VaccinationPageState extends State<VaccinationPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Text("VaccinationPage"));
+    return const Scaffold(body: Text("VaccinationPage"));
   }
 }

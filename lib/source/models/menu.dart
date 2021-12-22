@@ -23,25 +23,25 @@ class MenuTabItem {
         id: 0,
         title: "Trang chủ",
         iconData: LineIcons.home,
-        widget: HomePage(),
+        widget: const HomePage(),
         routeName: HomePage.routeName),
     MenuTabItem(
         id: 1,
         title: "Thống kê",
         iconData: LineIcons.barChartAlt,
-        widget: StatisticsPage(),
+        widget: const StatisticsPage(),
         routeName: StatisticsPage.routeName),
     MenuTabItem(
         id: 2,
         title: "Tiêm chủng",
         iconData: LineIcons.viacoin,
-        widget: VaccinationPage(),
+        widget: const VaccinationPage(),
         routeName: VaccinationPage.routeName),
     MenuTabItem(
         id: 3,
         title: "Thông tin",
         iconData: LineIcons.newspaperAlt,
-        widget: NewsPage(),
+        widget: const NewsPage(),
         routeName: NewsPage.routeName),
   ];
 }
