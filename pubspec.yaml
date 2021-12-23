@@ -13,9 +13,12 @@ dependencies:
   equatable:  ^2.0.3
   http: ^0.13.0
   line_icons: ^2.0.1
-  flutter_snake_navigationbar: ^0.5.0
+  flutter_snake_navigationbar: ^0.5.0  
+  salomon_bottom_bar: ^3.2.0
+
   flutter_svg: ^0.22.0
 
+  syncfusion_flutter_charts: ^19.4.38
 
 
 
@@ -38,7 +41,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
-    - assets/icons/
+    # - assets/icons/
     - assets/svg/
     - assets/fonts/BeFonts/
   #   - images/a_dot_ham.jpeg

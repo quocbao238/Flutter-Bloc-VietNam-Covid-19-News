@@ -11,6 +11,8 @@ class ThemePrimary {
 
   static Color green = const Color(0xFF4CD97B);
   static Color orange = const Color(0xFFFFB259);
+  static Color red = const Color(0xFFFF5959);
+  static Color blue = const Color(0xFF4DB5FF);
 
   static List<BoxShadow>? boxShadow = [
     const BoxShadow(

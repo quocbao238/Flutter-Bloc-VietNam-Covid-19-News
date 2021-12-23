@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
 import 'package:vietnamcovidtracking/source/models/models.dart';
 import 'package:vietnamcovidtracking/source/pages/tabs/bloc/tabpage_bloc.dart';
@@ -24,27 +25,17 @@ class _TabsPageState extends State<TabsPage> {
   }
 
   Widget _bottomNavigationBar(TabPageState state, BuildContext context) {
-    return SnakeNavigationBar.color(
-      backgroundColor: Colors.white,
-      behaviour: SnakeBarBehaviour.floating,
-      snakeShape: SnakeShape.circle,
-      snakeViewColor: ThemePrimary.primaryColor,
-      selectedItemColor: Colors.white,
-      unselectedItemColor: ThemePrimary.primaryColor,
-      showUnselectedLabels: true,
-      showSelectedLabels: false,
-      height: kToolbarHeight,
+    Color _selectedColor = ThemePrimary.primaryColor;
+    return SalomonBottomBar(
       currentIndex: state.index,
-      unselectedLabelStyle: Theme.of(context)
-          .textTheme
-          .bodyText2!
-          .copyWith(fontWeight: FontWeight.bold),
       onTap: (index) {
         context.read<TabPageBloc>().add(ChangeTabEvent(newIndex: index));
       },
       items: MenuTabItem.listMenuItem
-          .map((e) =>
-              BottomNavigationBarItem(icon: Icon(e.iconData), label: e.title))
+          .map((e) => SalomonBottomBarItem(
+              icon: Icon(e.iconData),
+              title: Text(e.title),
+              selectedColor: _selectedColor))
           .toList(),
     );
   }
