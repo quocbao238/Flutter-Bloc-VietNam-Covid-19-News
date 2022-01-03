@@ -15,11 +15,11 @@ dependencies:
   line_icons: ^2.0.1
   flutter_snake_navigationbar: ^0.5.0  
   salomon_bottom_bar: ^3.2.0
-
+  intl: ^0.17.0
   flutter_svg: ^0.22.0
-
+  syncfusion_flutter_maps: ^19.4.40-beta
   syncfusion_flutter_charts: ^19.4.38
-
+  flutter_spinkit: ^5.1.0
 
 
 dev_dependencies:

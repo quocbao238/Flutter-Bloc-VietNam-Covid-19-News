@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:vietnamcovidtracking/source/pages/home/view/home_page.dart';
+import 'package:vietnamcovidtracking/source/pages/map/view/map_page.dart';
 import 'package:vietnamcovidtracking/source/pages/news/view/news_page.dart';
 import 'package:vietnamcovidtracking/source/pages/statistics/view/statistics_page.dart';
 import 'package:vietnamcovidtracking/source/pages/vaccination/view/vaccination_page.dart';
@@ -33,12 +34,18 @@ class MenuTabItem {
         routeName: StatisticsPage.routeName),
     MenuTabItem(
         id: 2,
+        title: "Bản đồ",
+        iconData: LineIcons.map,
+        widget: const MapPage(),
+        routeName: VaccinationPage.routeName),
+    MenuTabItem(
+        id: 3,
         title: "Tiêm chủng",
         iconData: LineIcons.viacoin,
         widget: const VaccinationPage(),
         routeName: VaccinationPage.routeName),
     MenuTabItem(
-        id: 3,
+        id: 4,
         title: "Thông tin",
         iconData: LineIcons.newspaperAlt,
         widget: const NewsPage(),
