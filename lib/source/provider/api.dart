@@ -36,7 +36,9 @@ class Api {
         _result = statisticalChartFromJson(response.body).list;
         return _result;
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     return _result;
   }
 
