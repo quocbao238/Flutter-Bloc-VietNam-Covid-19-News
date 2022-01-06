@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
 import 'package:vietnamcovidtracking/source/models/province_model.dart';
+import 'package:tiengviet/tiengviet.dart';
 
 class ProvinceSelectDialog extends StatefulWidget {
   final Province provinceSelected;
@@ -17,11 +17,49 @@ class ProvinceSelectDialog extends StatefulWidget {
 }
 
 class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
+  late TextEditingController textEditingController;
+
+  List<Province> lstFilterProvince = [];
+
   late Province _provinceSelected;
   @override
   void initState() {
+    lstFilterProvince.addAll(widget.lstProvince);
+    textEditingController = TextEditingController();
     _provinceSelected = widget.provinceSelected;
     super.initState();
+    textEditingController.addListener(() {
+      if (textEditingController.text.isNotEmpty) {
+        onFilter(textEditingController.text);
+      } else {
+        onFilter(null);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
+  _onTapClear() {
+    textEditingController.clear();
+  }
+
+  //Filter offline
+  onFilter(String? value) {
+    lstFilterProvince.clear();
+    if (value == null) {
+      lstFilterProvince.addAll(widget.lstProvince);
+      return;
+    }
+    String _searchUnsigned = TiengViet.parse(value.toLowerCase());
+    lstFilterProvince = widget.lstProvince.where((element) {
+      String _titleUnsigned = TiengViet.parse(element.title!.toLowerCase());
+      return _titleUnsigned.contains(_searchUnsigned);
+    }).toList();
+    setState(() {});
   }
 
   @override
@@ -44,10 +82,11 @@ class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
               padding: const EdgeInsets.fromLTRB(10, 54, 10, 20),
               child: Column(
                 children: [
-                  Container(
+                  SizedBox(
                     height: 54,
                     // padding: const EdgeInsets.fromLTRB(20, 54, 20, 20),
                     child: TextField(
+                      controller: textEditingController,
                       decoration: InputDecoration(
                           labelText: "Tìm kiếm tỉnh thành",
                           isDense: true,
@@ -61,7 +100,7 @@ class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
                             color: ThemePrimary.primaryColor,
                           ),
                           suffixIcon: IconButton(
-                            onPressed: () {},
+                            onPressed: _onTapClear,
                             icon: const Icon(
                               Icons.clear,
                               color: Colors.grey,
@@ -87,7 +126,7 @@ class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
                   Expanded(
                     child: ListView(
                         padding: const EdgeInsets.only(top: 20, bottom: 10),
-                        children: widget.lstProvince.map((e) {
+                        children: lstFilterProvince.map((e) {
                           bool _isSelected = _provinceSelected.id == e.id;
                           return InkWell(
                             onTap: () {
@@ -103,10 +142,11 @@ class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
                                         : Colors.white),
                                 child: Row(
                                   children: [
-                                     Icon(Icons.location_city,
+                                    Icon(Icons.location_city,
                                         color: _isSelected
                                             ? Colors.white
-                                            : ThemePrimary.textPrimaryColor.withOpacity(0.5)),
+                                            : ThemePrimary.textPrimaryColor
+                                                .withOpacity(0.5)),
                                     const SizedBox(width: 8.0),
                                     Text(
                                       e.title!,
@@ -116,7 +156,8 @@ class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
                                           .copyWith(
                                               color: _isSelected
                                                   ? Colors.white
-                                                  : ThemePrimary.textPrimaryColor),
+                                                  : ThemePrimary
+                                                      .textPrimaryColor),
                                     ),
                                   ],
                                 )),

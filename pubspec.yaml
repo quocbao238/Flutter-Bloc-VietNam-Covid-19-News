@@ -20,7 +20,7 @@ dependencies:
   syncfusion_flutter_maps: ^19.4.40-beta
   syncfusion_flutter_charts: ^19.4.38
   flutter_spinkit: ^5.1.0
-
+  tiengviet: ^0.5.0
 
 dev_dependencies:
   flutter_test:

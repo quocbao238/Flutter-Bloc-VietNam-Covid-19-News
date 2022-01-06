@@ -217,9 +217,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     overflowMode: LegendItemOverflowMode.wrap,
                     legendItemBuilder: (String name, dynamic series,
                         dynamic point, int index) {
-                      return Container(
+                      return SizedBox(
                           height: 24,
-                          padding: const EdgeInsets.only(bottom: 8.0),
+                          // padding: const EdgeInsets.only(bottom: 8.0),
                           // width: 100,
                           child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
