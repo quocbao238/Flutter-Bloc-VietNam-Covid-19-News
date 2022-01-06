@@ -31,7 +31,7 @@ class Api {
     List<StatisticalChartItem> _result = [];
     try {
       var url = Uri.parse('$_domain/GetChartCovid');
-      http.Response response = await http.post(url, body: {"provinceId": ""});
+      http.Response response = await http.post(url, body: {"provinceId": provinceId});
       if (response.statusCode == 200) {
         _result = statisticalChartFromJson(response.body).list;
         return _result;

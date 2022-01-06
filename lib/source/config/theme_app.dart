@@ -37,15 +37,15 @@ class ThemePrimary {
             color: textPrimaryColor, fontWeight: FontWeight.bold, fontSize: 16),
         bodyText1: TextStyle(
             color: textPrimaryColor,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.w500,
             fontSize: 16),
         bodyText2: TextStyle(
             color: textPrimaryColor,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.w500,
             fontSize: 14),
-        subtitle2: TextStyle(
+        subtitle1: TextStyle(
             color: textPrimaryColor,
-            fontWeight: FontWeight.normal,
+            fontWeight: FontWeight.w400,
             fontSize: 12),
       ),
     );

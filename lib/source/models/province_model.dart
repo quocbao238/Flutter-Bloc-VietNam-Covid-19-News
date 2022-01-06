@@ -70,7 +70,7 @@ class Province {
   factory Province.fromJson(Map<String, dynamic> json) => Province(
         id: json["id"],
         title: json["title"],
-        clsconfirmed: clsconfirmedValues.map[json["clsconfirmed"]]!,
+        clsconfirmed: clsconfirmedValues.map[json["clsconfirmed"]],
         clsdeaths: json["clsdeaths"],
         clslevel: clslevelValues.map[json["clslevel"]]!,
         level: json["level"],

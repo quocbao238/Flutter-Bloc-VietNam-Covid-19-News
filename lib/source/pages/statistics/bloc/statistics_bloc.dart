@@ -13,7 +13,7 @@ part 'statistics_state.dart';
 
 class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
   SummPatient? summPatient;
-  List<Province>? lstProvince;
+  List<Province> lstProvince = [];
   List<ChartData>? lstChartData;
   Province? provinceSelected;
   bool? loadingChart;
@@ -31,13 +31,14 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
     if (_lstStatisticalChart.isNotEmpty) {
       lstChartData = createListChartData(_lstStatisticalChart);
     }
-    List<Province> lstProvince = await Api.getAllPatientProvinces();
-    if (lstProvince.isNotEmpty) {
-      Province? _province = Province();
-      _province.id = "-99";
-      _province.title = "Toàn quốc";
-      lstProvince.insert(0, _province);
-    }
+    lstProvince = await Api.getAllPatientProvinces();
+    // if (lstProvince.isNotEmpty) {
+    Province? _province = Province();
+    _province.id = "";
+    _province.title = "Toàn quốc";
+    lstProvince.insert(0, _province);
+    // }
+
     provinceSelected = lstProvince.first;
     emit(const LoadingSucessState());
   }
@@ -45,122 +46,21 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
   void onChangeProvince(
       ChangeProvinceEvent event, Emitter<StatisticsState> emit) async {
     emit(const OnLoadingChartState());
-    Province _lastProvince = event.lastProvince;
-    await showDialog(
+    Province? _newProvince = await showDialog(
         context: event.context,
         builder: (context) {
-          return Dialog(
-            // elevation: 4,
-            backgroundColor: Colors.transparent,
-
-            insetPadding:
-                const EdgeInsets.only(top: 10, bottom: 10, left: 32, right: 8),
-            child: Stack(
-              // ignore: deprecated_member_use
-              overflow: Overflow.visible,
-              alignment: Alignment.topCenter,
-              children: <Widget>[
-                Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.only(right: 24.0, top: 40),
-                    height: MediaQuery.of(context).size.height * 0.75,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white),
-                    padding: const EdgeInsets.fromLTRB(20, 54, 20, 20),
-                    child: Column(
-                      children: [
-                        Theme(
-                          data: Theme.of(context).copyWith(
-                              primaryColor: ThemePrimary.primaryColor,
-                              accentColor: ThemePrimary.primaryColor),
-                          child: TextField(
-                            // controller: _searchController,
-                            decoration: InputDecoration(
-                                labelText: "Tìm kiếm tỉnh thành",
-                                labelStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyText2!
-                                    .copyWith(color: ThemePrimary.primaryColor),
-                                hintText: "Nhập tỉnh thành cần tìm",
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: ThemePrimary.primaryColor,
-                                ),
-                                suffix: InkWell(
-                                  child: const Icon(Icons.clear),
-                                  onTap: () {},
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                        width: 1,
-                                        color: ThemePrimary.primaryColor)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                        width: 1,
-                                        color: ThemePrimary.primaryColor)),
-                                border: OutlineInputBorder(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    borderSide: BorderSide(
-                                        width: 1,
-                                        color: ThemePrimary.primaryColor))),
-                          ),
-                        ),
-                        ListView(
-                            shrinkWrap: true,
-                            children:
-                                (lstProvince != null && lstProvince!.isNotEmpty)
-                                    ? lstProvince!
-                                        .map((e) => Container(
-                                              padding: const EdgeInsets.only(
-                                                  left: 8, right: 8, bottom: 8),
-                                              child: Text(e.title!),
-                                            ))
-                                        .toList()
-                                    : []),
-                      ],
-                    )),
-                Positioned(
-                    top: 0,
-                    child: Container(
-                        height: 80,
-                        width: 80,
-                        margin: const EdgeInsets.only(right: 24),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: ThemePrimary.primaryColor),
-                        child: const Center(
-                            child: Icon(
-                          Icons.location_city,
-                          color: Colors.white,
-                          size: 48,
-                        )))),
-                Positioned(
-                    top: 0,
-                    right: 0,
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(100),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Ink(
-                        padding: const EdgeInsets.all(4.0),
-                        height: 40,
-                        width: 40,
-                        decoration: const BoxDecoration(
-                            color: Colors.red, shape: BoxShape.circle),
-                        child: const Icon(Icons.clear, color: Colors.white),
-                      ),
-                    ))
-              ],
-            ),
-          );
+          return ProvinceSelectDialog(
+              provinceSelected: event.lastProvince, lstProvince: lstProvince);
         });
+    if (_newProvince != null) {
+      provinceSelected = _newProvince;
+      List<StatisticalChartItem> _lstStatisticalChart =
+          await Api.getChartCovidByProvinceId(
+              provinceId: provinceSelected?.id ?? "");
+      if (_lstStatisticalChart.isNotEmpty) {
+        lstChartData = createListChartData(_lstStatisticalChart);
+      }
+    }
 
     emit(const LoadingSucessState());
 
@@ -199,5 +99,164 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
             ChartData(x: e.date, y: e.confirmed, secondSeriesYValue: e.death))
         .toList();
     return _result;
+  }
+}
+
+class ProvinceSelectDialog extends StatefulWidget {
+  final Province provinceSelected;
+
+  final List<Province> lstProvince;
+
+  const ProvinceSelectDialog(
+      {Key? key, required this.lstProvince, required this.provinceSelected})
+      : super(key: key);
+
+  @override
+  State<ProvinceSelectDialog> createState() => _ProvinceSelectDialogState();
+}
+
+class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
+  late Province _provinceSelected;
+  @override
+  void initState() {
+    _provinceSelected = widget.provinceSelected;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding:
+          const EdgeInsets.only(top: 10, bottom: 10, left: 32, right: 8),
+      child: Stack(
+        // ignore: deprecated_member_use
+        overflow: Overflow.visible,
+        alignment: Alignment.topCenter,
+        children: <Widget>[
+          Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(right: 24.0, top: 40),
+              height: MediaQuery.of(context).size.height * 0.75,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15), color: Colors.white),
+              padding: const EdgeInsets.fromLTRB(10, 54, 10, 20),
+              child: Column(
+                children: [
+                  Container(
+                    height: 54,
+                    // padding: const EdgeInsets.fromLTRB(20, 54, 20, 20),
+                    child: TextField(
+                      decoration: InputDecoration(
+                          labelText: "Tìm kiếm tỉnh thành",
+                          isDense: true,
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .bodyText2!
+                              .copyWith(color: ThemePrimary.primaryColor),
+                          hintText: "Nhập tỉnh thành cần tìm",
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: ThemePrimary.primaryColor,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.clear,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(
+                                  width: 1, color: ThemePrimary.primaryColor)),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(
+                                  width: 1, color: ThemePrimary.primaryColor)),
+                          border: OutlineInputBorder(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              borderSide: BorderSide(
+                                  width: 1, color: ThemePrimary.primaryColor))),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView(
+                        padding: const EdgeInsets.only(top: 20, bottom: 10),
+                        children: widget.lstProvince.map((e) {
+                          bool _isSelected = _provinceSelected.id == e.id;
+                          return InkWell(
+                            onTap: () {
+                              _provinceSelected = e;
+                              Navigator.of(context).pop(_provinceSelected);
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                decoration: BoxDecoration(
+                                    color: _isSelected
+                                        ? ThemePrimary.primaryColor
+                                        : Colors.white),
+                                child: Row(
+                                  children: [
+                                     Icon(Icons.location_city,
+                                        color: _isSelected
+                                            ? Colors.white
+                                            : ThemePrimary.textPrimaryColor.withOpacity(0.5)),
+                                    const SizedBox(width: 8.0),
+                                    Text(
+                                      e.title!,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1!
+                                          .copyWith(
+                                              color: _isSelected
+                                                  ? Colors.white
+                                                  : ThemePrimary.textPrimaryColor),
+                                    ),
+                                  ],
+                                )),
+                          );
+                        }).toList()),
+                  ),
+                ],
+              )),
+          Positioned(
+              top: 0,
+              child: Container(
+                  height: 80,
+                  width: 80,
+                  margin: const EdgeInsets.only(right: 24),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: ThemePrimary.primaryColor),
+                  child: const Center(
+                      child: Icon(
+                    Icons.location_city,
+                    color: Colors.white,
+                    size: 48,
+                  )))),
+          Positioned(
+              top: 0,
+              right: 0,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(100),
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Ink(
+                  padding: const EdgeInsets.all(4.0),
+                  height: 40,
+                  width: 40,
+                  decoration: const BoxDecoration(
+                      color: Colors.red, shape: BoxShape.circle),
+                  child: const Icon(Icons.clear, color: Colors.white),
+                ),
+              ))
+        ],
+      ),
+    );
   }
 }

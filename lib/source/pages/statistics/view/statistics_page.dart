@@ -162,7 +162,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       padding: const EdgeInsets.all(SizeApp.paddingTxt),
                       child: Center(
                           child: Text(
-                              "* Dữ liệu cập nhật ngày $_lastTimeUpdate"))),
+                              "* Dữ liệu cập nhật ngày $_lastTimeUpdate",style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                                color: Colors.white
+                              ),))),
                 ],
               ),
             );
@@ -215,8 +217,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     overflowMode: LegendItemOverflowMode.wrap,
                     legendItemBuilder: (String name, dynamic series,
                         dynamic point, int index) {
-                      return SizedBox(
+                      return Container(
                           height: 24,
+                          padding: const EdgeInsets.only(bottom: 8.0),
                           // width: 100,
                           child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -261,10 +264,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 child: Column(
                   children: [
                     Text("Biểu đồ số ca nhiễm và tử vong",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: ThemePrimary.primaryColor)),
+                        style:
+                            Theme.of(context).textTheme.headline2!.copyWith()),
                     InkWell(
                       onTap: () {
                         BlocProvider.of<StatisticsBloc>(
@@ -284,8 +285,14 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyText1!
-                                    .copyWith(fontWeight: FontWeight.bold)),
-                            const Icon(Icons.arrow_drop_down)
+                                    .copyWith(
+                                      fontWeight: FontWeight.w600,
+                                      color: ThemePrimary.primaryColor,
+                                    )),
+                             Icon(
+                              Icons.arrow_drop_down,
+                              color: ThemePrimary.primaryColor,
+                            )
                           ],
                         ),
                       ),
