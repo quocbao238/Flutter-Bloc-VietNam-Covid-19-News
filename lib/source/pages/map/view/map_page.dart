@@ -19,7 +19,7 @@ class MapPage extends StatefulWidget {
 }
 
 class _MapPageState extends State<MapPage> {
-  late List<Model> _data;
+  late List<ModelMap> _data;
   late MapShapeSource _mapSource;
 
   @override
@@ -51,7 +51,6 @@ class _MapPageState extends State<MapPage> {
     });
   }
 
-
   List<Feature> listFeature = [];
 
   loadJson() async {
@@ -67,74 +66,68 @@ class _MapPageState extends State<MapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemePrimary.primaryColor,
-      body: Container(
-          padding: const EdgeInsets.only(
-              top: SizeApp.normalPadding,
-              left: SizeApp.normalPadding,
-              right: SizeApp.normalPadding,
-              bottom: SizeApp.normalPadding),
-          decoration: BoxDecoration(
-              color: ThemePrimary.scaffoldBackgroundColor,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(50), topRight: Radius.circular(50))),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("Bản đồ vùng dịch",
-                    style: Theme.of(context).textTheme.headline1!.copyWith(
-                        overflow: TextOverflow.ellipsis,
-                        color: ThemePrimary.primaryColor)),
-                const SizedBox(height: SizeApp.normalPadding),
-                Expanded(
-                  child: SfMaps(layers: [
-                    MapShapeLayer(
-                      source: _mapSource,
-                      // showDataLabels: true,
-                      legend: const MapLegend(MapElement.shape),
-                      tooltipSettings: MapTooltipSettings(
-                          color: Colors.grey[700],
-                          strokeColor: Colors.white,
-                          strokeWidth: 2),
-                      strokeColor: Colors.white,
-                      strokeWidth: 0.5,
-                      shapeTooltipBuilder: (BuildContext context, int index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            _data[index].stateCode,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        );
-                      },
-                      dataLabelSettings: MapDataLabelSettings(
-                          textStyle: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .caption!
-                                  .fontSize)),
-                    ),
-                  ]),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.only(
+                left: SizeApp.normalPadding,
+                right: SizeApp.normalPadding,
+                bottom: SizeApp.normalPadding),
+            child: Text("Bản đồ vùng dịch",
+                style: Theme.of(context).textTheme.headline1!.copyWith(
+                    overflow: TextOverflow.ellipsis, color: Colors.white)),
+          ),
+          Expanded(
+            child: Container(
+                decoration: BoxDecoration(
+                  color: ThemePrimary.scaffoldBackgroundColor,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(50),
+                    topRight: Radius.circular(50),
+                  ),
                 ),
-              ])),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: SfMaps(layers: [
+                          MapShapeLayer(
+                            source: _mapSource,
+                            legend: const MapLegend(MapElement.shape),
+                            tooltipSettings: MapTooltipSettings(
+                                color: Colors.grey[700],
+                                strokeColor: Colors.white,
+                                strokeWidth: 2),
+                            strokeColor: Colors.white,
+                            strokeWidth: 0.5,
+                            shapeTooltipBuilder:
+                                (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  _data[index].stateCode,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                              );
+                            },
+                            dataLabelSettings: MapDataLabelSettings(
+                                textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .caption!
+                                        .fontSize)),
+                          ),
+                        ]),
+                      ),
+                    ])),
+          ),
+        ],
+      ),
       // ),
     );
   }
-}
-
-/// Collection of Australia state code data.
-class Model {
-  /// Initialize the instance of the [Model] class.
-  const Model(this.state, this.color, this.stateCode);
-
-  /// Represents the Australia state name.
-  final String state;
-
-  /// Represents the Australia state color.
-  final Color color;
-
-  /// Represents the Australia state code.
-  final String stateCode;
 }

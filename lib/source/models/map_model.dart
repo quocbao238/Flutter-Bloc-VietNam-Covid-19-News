@@ -6,6 +6,8 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
+
 MapModel vietNamMapModelFromJson(String str) =>
     MapModel.fromJson(json.decode(str));
 
@@ -172,4 +174,19 @@ class EnumValues<T> {
     // }
     return reverseMap;
   }
+}
+
+/// Collection of Australia state code data.
+class ModelMap {
+  /// Initialize the instance of the [Model] class.
+  const ModelMap(this.state, this.color, this.stateCode);
+
+  /// Represents the Australia state name.
+  final String state;
+
+  /// Represents the Australia state color.
+  final Color color;
+
+  /// Represents the Australia state code.
+  final String stateCode;
 }
