@@ -69,6 +69,15 @@ class _MapPageState extends State<MapPage> {
                                   padding: const EdgeInsets.only(
                                       top: 16, bottom: 16),
                                   child: SfMaps(layers: [
+                                    // MapShapeLayer(
+                                    //   source: MapShapeSource.asset(
+                                    //       'assets/paracelIslands.json'),
+                                    // ),
+                                    // MapShapeLayer(
+                                    //   source: MapShapeSource.asset(
+                                    //       'assets/spralyIslands.json'),
+                                    // ),
+
                                     MapShapeLayer(
                                       source: bloc.mapSource,
                                       legend: MapLegend(
@@ -102,6 +111,11 @@ class _MapPageState extends State<MapPage> {
                                         );
                                       },
                                     ),
+
+                                    // MapShapeLayer(
+                                    //   source: MapShapeSource.asset(
+                                    //       'assets/spralyIslands.json'),
+                                    // )
                                   ])),
                             ),
                         ],
