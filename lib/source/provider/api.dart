@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print, empty_catches
 
 import 'package:http/http.dart' as http;
+import 'package:vietnamcovidtracking/source/models/map_model.dart';
+import 'package:vietnamcovidtracking/source/models/province_map_model.dart';
 import 'package:vietnamcovidtracking/source/models/province_model.dart';
 import 'package:vietnamcovidtracking/source/models/statistical_chart_model.dart';
 import 'package:vietnamcovidtracking/source/models/sum_patient_model.dart';
@@ -31,7 +33,8 @@ class Api {
     List<StatisticalChartItem> _result = [];
     try {
       var url = Uri.parse('$_domain/GetChartCovid');
-      http.Response response = await http.post(url, body: {"provinceId": provinceId});
+      http.Response response =
+          await http.post(url, body: {"provinceId": provinceId});
       if (response.statusCode == 200) {
         _result = statisticalChartFromJson(response.body).list;
         return _result;
@@ -50,6 +53,22 @@ class Api {
       http.Response response = await http.post(url);
       if (response.statusCode == 200) {
         _result = provinceModelFromJson(response.body).list;
+        return _result;
+      }
+    } catch (e) {
+      print(e);
+    }
+    return _result;
+  }
+
+  // Lấy dữ liệu theo các tỉnh
+  static Future<List<ProvinceMap>> getProvincesMap() async {
+    List<ProvinceMap> _result = [];
+    try {
+      var url = Uri.parse('$_domain/getProvincesMap');
+      http.Response response = await http.post(url);
+      if (response.statusCode == 200) {
+        _result = provinceMapModelFromJson(response.body).list;
         return _result;
       }
     } catch (e) {

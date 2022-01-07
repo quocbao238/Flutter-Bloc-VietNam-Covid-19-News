@@ -8,13 +8,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
-MapModel vietNamMapModelFromJson(String str) =>
-    MapModel.fromJson(json.decode(str));
+MapModelAsset vietNamMapModelFromJson(String str) =>
+    MapModelAsset.fromJson(json.decode(str));
 
-String vietNamMapModelToJson(MapModel data) => json.encode(data.toJson());
+String vietNamMapModelToJson(MapModelAsset data) => json.encode(data.toJson());
 
-class MapModel {
-  MapModel({
+class MapModelAsset {
+  MapModelAsset({
     required this.type,
     required this.features,
   });
@@ -22,7 +22,7 @@ class MapModel {
   String type;
   List<Feature> features;
 
-  factory MapModel.fromJson(Map<String, dynamic> json) => MapModel(
+  factory MapModelAsset.fromJson(Map<String, dynamic> json) => MapModelAsset(
         type: json["type"],
         features: List<Feature>.from(
             json["features"].map((x) => Feature.fromJson(x))),
@@ -177,16 +177,16 @@ class EnumValues<T> {
 }
 
 /// Collection of Australia state code data.
-class ModelMap {
+class MapModelView {
   /// Initialize the instance of the [Model] class.
-  const ModelMap(this.state, this.color, this.stateCode);
+  MapModelView({required this.title, required this.color, required this.total});
 
   /// Represents the Australia state name.
-  final String state;
+  final String title;
 
   /// Represents the Australia state color.
-  final Color color;
+  Color color;
 
   /// Represents the Australia state code.
-  final String stateCode;
+  int total;
 }

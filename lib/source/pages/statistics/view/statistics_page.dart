@@ -162,9 +162,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       padding: const EdgeInsets.all(SizeApp.paddingTxt),
                       child: Center(
                           child: Text(
-                              "* Dữ liệu cập nhật ngày $_lastTimeUpdate",style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                                color: Colors.white
-                              ),))),
+                        "* Dữ liệu cập nhật ngày $_lastTimeUpdate",
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1!
+                            .copyWith(color: Colors.white),
+                      ))),
                 ],
               ),
             );
@@ -289,7 +292,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                       fontWeight: FontWeight.w600,
                                       color: ThemePrimary.primaryColor,
                                     )),
-                             Icon(
+                            Icon(
                               Icons.arrow_drop_down,
                               color: ThemePrimary.primaryColor,
                             )

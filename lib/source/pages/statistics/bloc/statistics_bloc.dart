@@ -45,14 +45,15 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
 
   void onChangeProvince(
       ChangeProvinceEvent event, Emitter<StatisticsState> emit) async {
-    emit(const OnLoadingChartState());
     Province? _newProvince = await showDialog(
         context: event.context,
         builder: (context) {
           return ProvinceSelectDialog(
               provinceSelected: event.lastProvince, lstProvince: lstProvince);
         });
+
     if (_newProvince != null) {
+      emit(const OnLoadingChartState());
       provinceSelected = _newProvince;
       List<StatisticalChartItem> _lstStatisticalChart =
           await Api.getChartCovidByProvinceId(
