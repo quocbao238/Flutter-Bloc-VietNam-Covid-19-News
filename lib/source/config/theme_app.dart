@@ -36,17 +36,11 @@ class ThemePrimary {
         headline3: TextStyle(
             color: textPrimaryColor, fontWeight: FontWeight.bold, fontSize: 16),
         bodyText1: TextStyle(
-            color: textPrimaryColor,
-            fontWeight: FontWeight.w500,
-            fontSize: 16),
+            color: textPrimaryColor, fontWeight: FontWeight.w500, fontSize: 14),
         bodyText2: TextStyle(
-            color: textPrimaryColor,
-            fontWeight: FontWeight.w500,
-            fontSize: 14),
+            color: textPrimaryColor, fontWeight: FontWeight.w500, fontSize: 14),
         subtitle1: TextStyle(
-            color: textPrimaryColor,
-            fontWeight: FontWeight.w400,
-            fontSize: 12),
+            color: textPrimaryColor, fontWeight: FontWeight.w400, fontSize: 12),
       ),
     );
   }

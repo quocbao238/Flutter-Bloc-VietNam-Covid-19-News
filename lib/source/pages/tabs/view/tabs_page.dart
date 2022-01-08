@@ -56,11 +56,11 @@ class _TabsPageState extends State<TabsPage> {
               //   icon: const Icon(LineIcons.equals),
               //   // onPressed: () => _tabsKey.currentState!.openDrawer(),
               // ),
-              actions: [
-                IconButton(
-                    icon: const Icon(LineIcons.bell, size: 30.0),
-                    onPressed: () {})
-              ],
+              // actions: [
+              //   IconButton(
+              //       icon: const Icon(LineIcons.bell, size: 30.0),
+              //       onPressed: () {})
+              // ],
             ),
             drawer: const Drawer(),
             body: _body(state, context),

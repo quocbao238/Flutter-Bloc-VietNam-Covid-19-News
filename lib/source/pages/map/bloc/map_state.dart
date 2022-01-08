@@ -12,6 +12,18 @@ class LoadingState extends MapState {
   List<Object> get props => [];
 }
 
+class LoadingListData extends MapState {
+  const LoadingListData();
+  @override
+  List<Object> get props => [];
+}
+
+class SearchState extends MapState {
+  const SearchState();
+  @override
+  List<Object> get props => [];
+}
+
 class LoadingSucessState extends MapState {
   const LoadingSucessState();
   @override

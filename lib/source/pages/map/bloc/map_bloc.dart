@@ -4,25 +4,30 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
+import 'package:tiengviet/tiengviet.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
 import 'package:vietnamcovidtracking/source/models/map_model.dart';
 import 'package:vietnamcovidtracking/source/models/province_map_model.dart';
+import 'package:vietnamcovidtracking/source/models/province_model.dart';
 import 'package:vietnamcovidtracking/source/provider/api.dart';
 part 'map_event.dart';
 part 'map_state.dart';
 
-// [danh sách vùng]
-Map<String, Color> mapColorByCount = {
-  "1-100": ThemePrimary.primaryColor.withOpacity(0.1),
-  "101 - 500": ThemePrimary.primaryColor.withOpacity(0.2),
-  "501 - 1000": ThemePrimary.primaryColor.withOpacity(0.4),
-  "1001 - 10000": ThemePrimary.primaryColor.withOpacity(0.6),
-  "10001+": ThemePrimary.primaryColor
-};
-
 class MapBloc extends Bloc<MapEvent, MapState> {
   List<MapModelView> listMapModel = [];
   late MapShapeSource mapSource;
+  List<Province> lstProvince = [];
+  List<Province> lstSearchProvince = [];
+  bool isViewMap = true;
+
+  // [danh sách vùng]
+  Map<String, Color> mapColorByCount = {
+    "1-100": ThemePrimary.primaryColor.withOpacity(0.1),
+    "101 - 500": ThemePrimary.primaryColor.withOpacity(0.2),
+    "501 - 1000": ThemePrimary.primaryColor.withOpacity(0.4),
+    "1001 - 10000": ThemePrimary.primaryColor.withOpacity(0.6),
+    "10001+": ThemePrimary.primaryColor
+  };
 
   late final List<MapColorMapper> _shapeColorMappers = <MapColorMapper>[
     MapColorMapper(
@@ -51,55 +56,31 @@ class MapBloc extends Bloc<MapEvent, MapState> {
 
   MapBloc() : super(const MapState()) {
     on<LoadEvent>(onLoadData);
+    on<RefeshEvent>(onRefresh);
+    on<SearchProvinceEvent>(onSearchProvince);
+    on<ChangeMapListEvent>(onChangeMapListEvent);
   }
+
+  void onRefresh(RefeshEvent event, Emitter<MapState> emit) async {}
 
   void onLoadData(LoadEvent event, Emitter<MapState> emit) async {
     emit(const LoadingState());
-    // print("onLoadData");
     try {
       //start
       String data = await rootBundle.loadString('assets/vietnam.json');
       var jsonResult = json.decode(data);
       // List thứ nhất parse từ json local
       MapModelAsset _mapModel = MapModelAsset.fromJson(jsonResult);
-
-      // // Map thành listMapModel để hiển thị lên UI
-      // listMapModel = _mapModel.features.map((e) {
-      //   //map vo day luon là tiet kiem dc 1 cai for r ne
-      //   return MapModelView(
-      //       title: e.properties.name1,
-      //       color: ThemePrimary.primaryColor,
-      //       total: 0);
-      // }).toList();
-      // //end
-      // //bỏ khúc này vào cái for lstProvinceMap
-
-      // List lấy dữ liệu các ca nhiễm từ api
       List<ProvinceMap> lstProvinceMap = await Api.getProvincesMap();
-
       // For list dữ liệu để map với listMapModel
       await Future.forEach(lstProvinceMap, (ProvinceMap element) {
         if (element.data == null || element.data!.isEmpty) return;
-        // Set màu tùy theo khu vực, dựa vào ProvinceMap.title
         Color? _colors = mapColorByCount[element.name];
         List<String> _titleSet =
             element.data!.map((e) => e.title.toString()).toList();
-
-        // Map thành listMapModel để hiển thị lên UI
-        // listMapModel = _mapModel.features.map((e) {
+        print(_titleSet);
         for (var e in _mapModel.features) {
-          //map vo day luon là tiet kiem dc 1 cai for r ne
-          // Kiểm tra mapModelView có nằm trong [danh sách vùng] không
           if (_titleSet.contains(e.properties.name1)) {
-            //nếu có thì set màu vùng và số lượng ca nhiễm
-            // mapModelView.color = _colors ?? ThemePrimary.primaryColor;
-
-            // Số lượng ca nhiễm sẽ check list [element.data] nằm trong dữ liệu api trả về -> map số lượng ca nhiễm vào
-            // mapModelView.total = element.data!
-            //         .firstWhere(
-            //             (element) => element.title == mapModelView.title)
-            //         .confirmed ??
-            //     0;
             listMapModel.add(MapModelView(
                 title: e.properties.name1,
                 color: _colors ?? ThemePrimary.primaryColor,
@@ -109,44 +90,20 @@ class MapBloc extends Bloc<MapEvent, MapState> {
                         .confirmed ??
                     0));
           }
+          if (_titleSet.contains("")) {
+            listMapModel.add(MapModelView(
+                title: "Hồ Chí Minh",
+                color: _colors ?? ThemePrimary.primaryColor,
+                total: element.data!
+                        .firstWhere((element) => element.title == "")
+                        .confirmed ??
+                    0));
+          }
         }
-        //end
-        //bỏ khúc này vào cái for lstProvinceMap
-
-        // Fix dữ liệu hcm bị null
-        // cái này là do có trường hợp HCM trả về title null nên phải check
-
-        //chỗ này ko hiểu :))
-        // Anh ẩn đi không ảnh hưởng dâu, do cái title của HCM api trả về null nên em thêm text cho nó thôi
-        // để vậy chắc ko sao , e chạy thử xem
-        // OK a
-        // if (_titleSet.contains("")) {
-        //   listMapModel
-        //       .firstWhere((element) => element.title == "Hồ Chí Minh")
-        //       .total = element.data!
-        //           .firstWhere((element) => element.title == "")
-        //           .confirmed ??
-        //       0;
-        // }
-        // for (MapModelView mapModelView in listMapModel) {
-        //   // Kiểm tra mapModelView có nằm trong [danh sách vùng] không
-        //   if (_titleSet.contains(mapModelView.title)) {
-        //     //nếu có thì set màu vùng và số lượng ca nhiễm
-        //     mapModelView.color = _colors ?? ThemePrimary.primaryColor;
-
-        //     // Số lượng ca nhiễm sẽ check list [element.data] nằm trong dữ liệu api trả về -> map số lượng ca nhiễm vào
-        //     mapModelView.total = element.data!
-        //             .firstWhere(
-        //                 (element) => element.title == mapModelView.title)
-        //             .confirmed ??
-        //         0;
-        //   }
-        // }
       });
     } catch (e) {
-      print(e);
+      // print(e);
     }
-    // Nãy bị văng catch nên không có new mapSource
     mapSource = MapShapeSource.asset('assets/vietnam.json',
         shapeDataField: "NAME_1",
         dataCount: listMapModel.length,
@@ -155,6 +112,37 @@ class MapBloc extends Bloc<MapEvent, MapState> {
             listMapModel[index].total.toDouble(),
         shapeColorMappers: _shapeColorMappers);
 
+    emit(const LoadingSucessState());
+  }
+
+  Future<void> onChangeMapListEvent(
+      ChangeMapListEvent event, Emitter<MapState> emit) async {
+    emit(const LoadingListData());
+    // lstProvince.clear();
+    lstSearchProvince.clear();
+    isViewMap = event.isViewMap;
+    if (lstProvince.isEmpty) {
+      lstProvince = await Api.getAllPatientProvinces();
+    }
+    lstSearchProvince.addAll(lstProvince);
+    emit(const LoadingSucessState());
+  }
+
+  void onSearchProvince(SearchProvinceEvent event, Emitter<MapState> emit) {
+    emit(const SearchState());
+    if (lstProvince.isEmpty) emit(const LoadingSucessState());
+    String _keySearch = TiengViet.parse(event.keySearch).toLowerCase();
+    print(_keySearch);
+    lstSearchProvince.clear();
+    if (_keySearch.isEmpty) {
+      lstSearchProvince.addAll(lstProvince);
+    } else {
+      lstSearchProvince = lstProvince
+          .where((element) => TiengViet.parse(element.title!)
+              .toLowerCase()
+              .contains(_keySearch))
+          .toList();
+    }
     emit(const LoadingSucessState());
   }
 }
