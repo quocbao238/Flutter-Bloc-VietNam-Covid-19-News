@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vietnamcovidtracking/source/config/size_app.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
+import 'package:vietnamcovidtracking/source/helper/rss_helpder.dart';
+import 'package:vietnamcovidtracking/source/provider/api.dart';
 
 class NewsPage extends StatefulWidget {
   static const String routeName = "/newsPage";
@@ -12,6 +14,18 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  onLoad() async {
+    var a = await Api.getListCovidNews();
+    print(a);
+    print(RssHelper.changeSizeImage(
+        imageUrl: a[0].image, width: 120, height: 60));
+  }
+
   @override
   Widget build(BuildContext context) {
     Widget _title() {
@@ -29,13 +43,19 @@ class _NewsPageState extends State<NewsPage> {
     }
 
     return Scaffold(
-        body: Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        _title(),
-      ],
-    ));
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          _title(),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          onLoad();
+        },
+      ),
+    );
   }
 }

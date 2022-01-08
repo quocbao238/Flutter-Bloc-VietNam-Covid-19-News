@@ -96,8 +96,7 @@ class FloatingActionBubble extends AnimatedWidget {
   Widget buildItem(BuildContext context, int index) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    TextDirection textDirection =
-        Directionality.of(context) ?? TextDirection.ltr;
+    TextDirection textDirection = Directionality.of(context);
 
     double animationDirection = textDirection == TextDirection.ltr ? -1 : 1;
 
