@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -18,7 +20,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   late MapShapeSource mapSource;
   List<Province> lstProvince = [];
   List<Province> lstSearchProvince = [];
-  bool isViewMap = true;
+  // bool isViewMap = true;
 
   // [danh sách vùng]
   Map<String, Color> mapColorByCount = {
@@ -57,8 +59,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   MapBloc() : super(const MapState()) {
     on<LoadEvent>(onLoadData);
     on<RefeshEvent>(onRefresh);
-    on<SearchProvinceEvent>(onSearchProvince);
-    on<ChangeMapListEvent>(onChangeMapListEvent);
   }
 
   void onRefresh(RefeshEvent event, Emitter<MapState> emit) async {}
@@ -78,7 +78,6 @@ class MapBloc extends Bloc<MapEvent, MapState> {
         Color? _colors = mapColorByCount[element.name];
         List<String> _titleSet =
             element.data!.map((e) => e.title.toString()).toList();
-        print(_titleSet);
         for (var e in _mapModel.features) {
           if (_titleSet.contains(e.properties.name1)) {
             listMapModel.add(MapModelView(
@@ -101,9 +100,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
           }
         }
       });
-    } catch (e) {
-      // print(e);
-    }
+    } catch (e) {}
     mapSource = MapShapeSource.asset('assets/vietnam.json',
         shapeDataField: "NAME_1",
         dataCount: listMapModel.length,
@@ -115,34 +112,33 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     emit(const LoadingSucessState());
   }
 
-  Future<void> onChangeMapListEvent(
-      ChangeMapListEvent event, Emitter<MapState> emit) async {
-    emit(const LoadingListData());
-    // lstProvince.clear();
-    lstSearchProvince.clear();
-    isViewMap = event.isViewMap;
-    if (lstProvince.isEmpty) {
-      lstProvince = await Api.getAllPatientProvinces();
-    }
-    lstSearchProvince.addAll(lstProvince);
-    emit(const LoadingSucessState());
-  }
+  // Future<void> onChangeMapListEvent(
+  //     ChangeMapListEvent event, Emitter<MapState> emit) async {
+  //   emit(const LoadingListData());
+  //   // lstProvince.clear();
+  //   lstSearchProvince.clear();
+  //   isViewMap = event.isViewMap;
+  //   if (lstProvince.isEmpty) {
+  //     lstProvince = await Api.getAllPatientProvinces();
+  //   }
+  //   lstSearchProvince.addAll(lstProvince);
+  //   emit(const LoadingSucessState());
+  // }
 
-  void onSearchProvince(SearchProvinceEvent event, Emitter<MapState> emit) {
-    emit(const SearchState());
-    if (lstProvince.isEmpty) emit(const LoadingSucessState());
-    String _keySearch = TiengViet.parse(event.keySearch).toLowerCase();
-    print(_keySearch);
-    lstSearchProvince.clear();
-    if (_keySearch.isEmpty) {
-      lstSearchProvince.addAll(lstProvince);
-    } else {
-      lstSearchProvince = lstProvince
-          .where((element) => TiengViet.parse(element.title!)
-              .toLowerCase()
-              .contains(_keySearch))
-          .toList();
-    }
-    emit(const LoadingSucessState());
-  }
+  // void onSearchProvince(SearchProvinceEvent event, Emitter<MapState> emit) {
+  //   emit(const SearchState());
+  //   if (lstProvince.isEmpty) emit(const LoadingSucessState());
+  //   String _keySearch = TiengViet.parse(event.keySearch).toLowerCase();
+  //   lstSearchProvince.clear();
+  //   if (_keySearch.isEmpty) {
+  //     lstSearchProvince.addAll(lstProvince);
+  //   } else {
+  //     lstSearchProvince = lstProvince
+  //         .where((element) => TiengViet.parse(element.title!)
+  //             .toLowerCase()
+  //             .contains(_keySearch))
+  //         .toList();
+  //   }
+  //   emit(const LoadingSucessState());
+  // }
 }

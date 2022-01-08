@@ -10,12 +10,12 @@ class LoadEvent extends MapEvent {
   List<Object?> get props => [];
 }
 
-class ChangeMapListEvent extends MapEvent {
-  final bool isViewMap;
-  const ChangeMapListEvent(this.isViewMap);
-  @override
-  List<Object?> get props => [];
-}
+// class ChangeMapListEvent extends MapEvent {
+//   final bool isViewMap;
+//   const ChangeMapListEvent(this.isViewMap);
+//   @override
+//   List<Object?> get props => [];
+// }
 
 class RefeshEvent extends MapEvent {
   const RefeshEvent();
@@ -23,9 +23,9 @@ class RefeshEvent extends MapEvent {
   List<Object?> get props => [];
 }
 
-class SearchProvinceEvent extends MapEvent {
-  final String keySearch;
-  const SearchProvinceEvent({required this.keySearch});
-  @override
-  List<Object?> get props => [keySearch];
-}
+// class SearchProvinceEvent extends MapEvent {
+//   final String keySearch;
+//   const SearchProvinceEvent({required this.keySearch});
+//   @override
+//   List<Object?> get props => [keySearch];
+// }

@@ -34,7 +34,10 @@ class _TabsPageState extends State<TabsPage> {
         items: MenuTabItem.listMenuItem
             .map((e) => SalomonBottomBarItem(
                 icon: Icon(e.iconData),
-                title: Text(e.title,overflow: TextOverflow.ellipsis,),
+                title: Text(
+                  e.title,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 selectedColor: _selectedColor))
             .toList(),
       ),
@@ -52,6 +55,14 @@ class _TabsPageState extends State<TabsPage> {
             appBar: AppBar(
               backgroundColor: ThemePrimary.primaryColor,
               elevation: 0,
+              centerTitle: true,
+              // title: Text(
+              //   bloc.title,
+              //   style: Theme.of(context)
+              //       .textTheme
+              //       .headline2!
+              //       .copyWith(color: Colors.white),
+              // ),
               // leading: IconButton(
               //   icon: const Icon(LineIcons.equals),
               //   // onPressed: () => _tabsKey.currentState!.openDrawer(),

@@ -52,13 +52,13 @@ class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
     lstFilterProvince.clear();
     if (value == null) {
       lstFilterProvince.addAll(widget.lstProvince);
-      return;
+    } else {
+      String _searchUnsigned = TiengViet.parse(value.toLowerCase());
+      lstFilterProvince = widget.lstProvince.where((element) {
+        String _titleUnsigned = TiengViet.parse(element.title!.toLowerCase());
+        return _titleUnsigned.contains(_searchUnsigned);
+      }).toList();
     }
-    String _searchUnsigned = TiengViet.parse(value.toLowerCase());
-    lstFilterProvince = widget.lstProvince.where((element) {
-      String _titleUnsigned = TiengViet.parse(element.title!.toLowerCase());
-      return _titleUnsigned.contains(_searchUnsigned);
-    }).toList();
     setState(() {});
   }
 
@@ -130,6 +130,7 @@ class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
                           bool _isSelected = _provinceSelected.id == e.id;
                           return InkWell(
                             onTap: () {
+                              FocusScope.of(context).unfocus();
                               _provinceSelected = e;
                               Navigator.of(context).pop(_provinceSelected);
                             },

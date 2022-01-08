@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'source/config/app_routes.dart';
 import 'source/config/theme_app.dart';
 
@@ -7,8 +8,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return MaterialApp(
-      title: "VietName Covid-19 Tracking",
+      title: "VietNam Covid-19 News",
       debugShowCheckedModeBanner: false,
       theme: ThemePrimary.theme(),
       onGenerateRoute: AppRoutes.onGenerateRoute,

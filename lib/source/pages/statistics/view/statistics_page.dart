@@ -119,10 +119,10 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Số liệu thống kê trong nước",
+                  Text("Tổng số ca nhiễm trong nước",
                       style: Theme.of(context)
                           .textTheme
-                          .headline1!
+                          .headline2!
                           .copyWith(color: Colors.white)),
                   // if (summPatient != null)
                   Container(

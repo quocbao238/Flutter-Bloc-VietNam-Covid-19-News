@@ -40,8 +40,8 @@ class MenuTabItem {
         routeName: VaccinationPage.routeName),
     MenuTabItem(
         id: 3,
-        title: "Tiêm chủng",
-        iconData: LineIcons.viacoin,
+        title: "Số liệu",
+        iconData: LineIcons.database,
         widget: const VaccinationPage(),
         routeName: VaccinationPage.routeName),
     MenuTabItem(

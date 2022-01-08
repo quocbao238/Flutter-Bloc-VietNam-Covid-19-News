@@ -64,32 +64,6 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
     }
 
     emit(const LoadingSucessState());
-
-    // print(event.buildContext);
-    // print(event);
-
-    // Province? _lastSelectedProvince = event.lastProvince;
-    // emit(const LoadingState());
-    // SummPatient? _summPatient = await Api.getSummPatient();
-    // List<ChartData> _lstChartData = [];
-    // List<StatisticalChartItem> _lstStatisticalChart =
-    //     await Api.getChartCovidByProvinceId();
-    // if (_lstStatisticalChart.isNotEmpty) {
-    //   _lstChartData = createListChartData(_lstStatisticalChart);
-    // }
-    // List<Province> lstProvince = await Api.getAllPatientProvinces();
-    // if (lstProvince.isNotEmpty) {
-    //   Province? _province = Province();
-    //   _province.id = "-99";
-    //   _province.title = "Toàn quốc";
-    //   lstProvince.insert(0, _province);
-    // }
-    // Province _provinceSelect = lstProvince.first;
-    // emit(state.copyWith(
-    //     summPatient: _summPatient,
-    //     provinceSelected: _provinceSelect,
-    //     lstChartData: _lstChartData,
-    //     lstProvince: lstProvince));
   }
 
   List<ChartData> createListChartData(

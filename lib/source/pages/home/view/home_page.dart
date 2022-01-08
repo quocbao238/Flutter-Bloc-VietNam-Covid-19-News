@@ -72,10 +72,10 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Viet Nam Covid Tracking",
+              "Tình trạng sức khỏe của bạn hôm nay thế nào?",
               style: Theme.of(context)
                   .textTheme
-                  .headline1!
+                  .headline2!
                   .copyWith(color: Colors.white),
             ),
             const SizedBox(height: SizeApp.normalPadding),
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage> {
               "Bạn có cảm thấy như bị bệnh không?",
               style: Theme.of(context)
                   .textTheme
-                  .headline2!
+                  .headline3!
                   .copyWith(color: Colors.white),
             ),
             const SizedBox(height: SizeApp.normalPadding),
@@ -221,7 +221,7 @@ class _HomePageState extends State<HomePage> {
                 left: 15,
                 child: SvgPicture.asset(
                   "assets/svg/owntest.svg",
-                  height: MediaQuery.of(context).size.height * 0.15,
+                  // height: MediaQuery.of(context).size.height * 0.15,
                   fit: BoxFit.fill,
                   alignment: Alignment.center,
                 ))

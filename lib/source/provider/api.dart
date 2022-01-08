@@ -20,7 +20,9 @@ class Api {
         _result = summPatientFromJson(response.body);
         return _result;
       }
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     return _result;
   }
 
