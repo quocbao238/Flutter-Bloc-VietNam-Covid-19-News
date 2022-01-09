@@ -15,3 +15,11 @@ class RefeshEvent extends NewsEvent {
   @override
   List<Object?> get props => [];
 }
+
+class OnTapItemEvent extends NewsEvent {
+  final BuildContext context;
+  final NewsModel newsModel;
+  const OnTapItemEvent({required this.newsModel, required this.context});
+  @override
+  List<Object?> get props => [newsModel];
+}

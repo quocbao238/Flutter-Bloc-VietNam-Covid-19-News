@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
 import 'package:vietnamcovidtracking/source/config/size_app.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
-import 'package:vietnamcovidtracking/source/models/province_model.dart';
 import 'package:vietnamcovidtracking/source/pages/map/bloc/map_bloc.dart';
 import 'package:vietnamcovidtracking/source/widget/loading_widget.dart';
 
@@ -74,10 +73,10 @@ class _MapPageState extends State<MapPage> {
                   iconSize: const Size(14, 14),
                   textStyle: Theme.of(context).textTheme.bodyText1,
                 ),
-                tooltipSettings: MapTooltipSettings(
-                    color: ThemePrimary.primaryColor,
-                    strokeColor: Colors.white,
-                    strokeWidth: 2),
+                // tooltipSettings: MapTooltipSettings(
+                //     color: ThemePrimary.primaryColor,
+                //     strokeColor: Colors.white,
+                //     strokeWidth: 2),
                 strokeColor: Colors.white,
                 strokeWidth: 1,
                 shapeTooltipBuilder: (BuildContext context, int index) {

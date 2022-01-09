@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:vietnamcovidtracking/source/config/size_app.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
 import 'package:vietnamcovidtracking/source/pages/news/bloc/news_bloc.dart';
+import 'package:vietnamcovidtracking/source/pages/news_detail/news_detail.dart';
 
 class NewsPage extends StatefulWidget {
   static const String routeName = "/newsPage";
@@ -75,7 +76,7 @@ class _NewsPageState extends State<NewsPage>
                                 fontSize: 16.0,
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500),
-                            maxLines: 1,
+                            maxLines: 2,
                             overflow: TextOverflow.ellipsis),
                         Text(bloc.lstNews[itemIndex].pubDate,
                             style: const TextStyle(
@@ -116,7 +117,8 @@ class _NewsPageState extends State<NewsPage>
                 ),
                 child: InkWell(
                   onTap: () {
-                    // homeController.onTapCarouse(itemIndex);
+                    bloc.add(OnTapItemEvent(
+                        newsModel: bloc.lstNews[itemIndex], context: context));
                   },
                   child: SizedBox(
                       height: MediaQuery.of(context).size.height * 0.4,
@@ -166,106 +168,113 @@ class _NewsPageState extends State<NewsPage>
                         child: SingleChildScrollView(
                           physics: const AlwaysScrollableScrollPhysics(),
                           child: Column(
-                            // padding: const EdgeInsets.only(bottom: 8),
-                            // shrinkWrap: true,
-                            // physics: const AlwaysScrollableScrollPhysics(),
                             children: [
                               _carouseSlider(),
-                              ...bloc.lstNews
-                                  .map((e) => Container(
-                                        margin: const EdgeInsets.only(
-                                            bottom: 8, right: 8, left: 8),
-                                        padding: const EdgeInsets.only(
-                                            top: 8,
-                                            bottom: 8,
-                                            left: 8,
-                                            right: 8),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                          color: Colors.white,
-                                          boxShadow: const [
-                                            BoxShadow(
-                                                color: Colors.black12,
-                                                blurRadius: 4.0,
-                                                offset: Offset(0.0, 4.0))
-                                          ],
-                                        ),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              flex: 1,
-                                              // padding: const EdgeInsets.all(8.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                                child: CachedNetworkImage(
-                                                  imageUrl: e.image,
-                                                  fit: BoxFit.fill,
-                                                  progressIndicatorBuilder:
-                                                      (context, url,
-                                                              downloadProgress) =>
-                                                          Center(
-                                                    child: Container(
-                                                      height: 40,
-                                                      width: 40,
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              4.0),
-                                                      child: CircularProgressIndicator(
-                                                          strokeWidth: 2,
-                                                          backgroundColor:
-                                                              ThemePrimary
-                                                                  .primaryColor
-                                                                  .withOpacity(
-                                                                      0.1),
-                                                          color: ThemePrimary
-                                                              .primaryColor,
-                                                          value:
-                                                              downloadProgress
-                                                                  .progress),
+                              ...bloc.lstNews.map((e) {
+                                int _index = bloc.lstNews.indexOf(e);
+                                return _index < 5
+                                    ? const SizedBox()
+                                    : InkWell(
+                                        onTap: () {
+                                          bloc.add(OnTapItemEvent(
+                                              newsModel: e, context: context));
+                                        },
+                                        child: Container(
+                                          margin: const EdgeInsets.only(
+                                              bottom: 8, right: 8, left: 8),
+                                          padding: const EdgeInsets.only(
+                                              top: 8,
+                                              bottom: 8,
+                                              left: 8,
+                                              right: 8),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            color: Colors.white,
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                  color: Colors.black12,
+                                                  blurRadius: 4.0,
+                                                  offset: Offset(0.0, 4.0))
+                                            ],
+                                          ),
+                                          child: Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                flex: 1,
+                                                // padding: const EdgeInsets.all(8.0),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: e.image,
+                                                    fit: BoxFit.fill,
+                                                    progressIndicatorBuilder:
+                                                        (context, url,
+                                                                downloadProgress) =>
+                                                            Center(
+                                                      child: Container(
+                                                        height: 40,
+                                                        width: 40,
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(4.0),
+                                                        child: CircularProgressIndicator(
+                                                            strokeWidth: 2,
+                                                            backgroundColor:
+                                                                ThemePrimary
+                                                                    .primaryColor
+                                                                    .withOpacity(
+                                                                        0.1),
+                                                            color: ThemePrimary
+                                                                .primaryColor,
+                                                            value:
+                                                                downloadProgress
+                                                                    .progress),
+                                                      ),
                                                     ),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Icon(Icons.error),
                                                   ),
-                                                  errorWidget: (context, url,
-                                                          error) =>
-                                                      const Icon(Icons.error),
-                                                ),
 
-                                                //  Image.network(e.image,
-                                                //     fit: BoxFit.fill),
+                                                  //  Image.network(e.image,
+                                                  //     fit: BoxFit.fill),
+                                                ),
                                               ),
-                                            ),
-                                            const SizedBox(width: 8.0),
-                                            Expanded(
-                                                flex: 3,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      e.title,
-                                                      maxLines: null,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 8.0),
-                                                      child: Text(e.pubDate),
-                                                    ),
-                                                  ],
-                                                )),
-                                          ],
+                                              const SizedBox(width: 8.0),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        e.title,
+                                                        maxLines: null,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 8.0),
+                                                        child: Text(e.pubDate),
+                                                      ),
+                                                    ],
+                                                  )),
+                                            ],
+                                          ),
                                         ),
-                                      ))
-                                  .toList()
+                                      );
+                              }).toList()
                             ],
                           ),
                         ),

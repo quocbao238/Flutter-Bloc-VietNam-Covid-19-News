@@ -17,3 +17,4 @@ class LoadingSucessState extends NewsState {
   @override
   List<Object> get props => [];
 }
+
