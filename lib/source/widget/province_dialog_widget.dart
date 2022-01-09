@@ -138,6 +138,9 @@ class _ProvinceSelectDialogState extends State<ProvinceSelectDialog> {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
                                 decoration: BoxDecoration(
+                                    border: const Border(
+                                        bottom: BorderSide(
+                                            width: 1, color: Colors.black12)),
                                     color: _isSelected
                                         ? ThemePrimary.primaryColor
                                         : Colors.white),
