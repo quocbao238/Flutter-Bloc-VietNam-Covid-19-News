@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vietnamcovidtracking/source/config/size_app.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/homePage";
@@ -102,13 +104,102 @@ class _HomePageState extends State<HomePage> {
                     title: "Gọi ngay",
                     icon: Icons.phone,
                     backgroundcolor: ThemePrimary.green,
-                    onTap: () {}),
+                    onTap: () async {
+                      const _url = "tel:19003228";
+                      if (await canLaunch(_url)) {
+                        await launch(_url);
+                      } else {
+                        throw 'Could not launch $_url';
+                      }
+                    }),
                 // const SizedBox(width: 16.0),
                 _btnCallSms(
                     title: "Gửi tin nhắn",
                     backgroundcolor: ThemePrimary.orange,
                     icon: LineIcons.sms,
-                    onTap: () {})
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                                backgroundColor: Colors.transparent,
+                                insetPadding: const EdgeInsets.only(
+                                    top: 10, bottom: 10, left: 32, right: 8),
+                                child: Stack(
+                                  // ignore: deprecated_member_use
+                                  overflow: Overflow.visible,
+                                  alignment: Alignment.topCenter,
+                                  children: <Widget>[
+                                    Container(
+                                        width: double.infinity,
+                                        margin: const EdgeInsets.only(
+                                            right: 24.0, top: 40),
+                                        height:
+                                            // MediaQuery.of(context).size.height *
+                                            //     0.3,
+                                            120.0,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: Colors.white),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 28, 10, 20),
+                                        child: Column(
+                                          children: [
+                                            Text("Thông báo",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2!),
+                                            Text("Tính năng đang phát triển",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .headline2!
+                                                    .copyWith(
+                                                        color: ThemePrimary
+                                                            .primaryColor)),
+                                          ],
+                                        )),
+                                    Positioned(
+                                        top: 0,
+                                        child: Container(
+                                            height: 60,
+                                            width: 60,
+                                            margin: const EdgeInsets.only(
+                                                right: 24),
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color:
+                                                    ThemePrimary.primaryColor),
+                                            child: const Center(
+                                                child: Icon(
+                                              Icons.info,
+                                              color: Colors.white,
+                                              size: 34,
+                                            )))),
+                                    Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: InkWell(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Ink(
+                                            padding: const EdgeInsets.all(4.0),
+                                            height: 40,
+                                            width: 40,
+                                            decoration: const BoxDecoration(
+                                                color: Colors.red,
+                                                shape: BoxShape.circle),
+                                            child: const Icon(Icons.clear,
+                                                color: Colors.white),
+                                          ),
+                                        ))
+                                  ],
+                                ));
+                          });
+                    })
               ],
             ),
             const SizedBox(height: 16.0),

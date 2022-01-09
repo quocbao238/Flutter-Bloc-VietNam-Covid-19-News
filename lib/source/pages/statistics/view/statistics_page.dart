@@ -257,6 +257,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
             }
 
             return Expanded(
+              // maxHeight: MediaQuery.of(context).size.height,
               child: Container(
                 padding: const EdgeInsets.only(top: SizeApp.normalPadding),
                 decoration: BoxDecoration(
@@ -314,26 +315,34 @@ class _StatisticsPageState extends State<StatisticsPage> {
           }
 
           return Scaffold(
-              key: _statisticsglobalKey,
-              backgroundColor: ThemePrimary.primaryColor,
-              body: state is LoadingState
-                  // ignore: avoid_unnecessary_containers
-                  ? const LoadingWidget()
-                  : RefreshIndicator(
-                      onRefresh: () async => bloc.add(const RefeshEvent()),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [_statistics(), _chart()],
+            key: _statisticsglobalKey,
+            backgroundColor: ThemePrimary.primaryColor,
+            body: state is LoadingState
+                ? const LoadingWidget()
+                : RefreshIndicator(
+                    onRefresh: () async => bloc.add(const RefeshEvent()),
+                    child: SingleChildScrollView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      child: SizedBox(
+                        // Size screen - appbar - bottom bar - status - padding x2
+                        height: MediaQuery.of(context).size.height -
+                            kToolbarHeight -
+                            kToolbarHeight -
+                            MediaQuery.of(context).padding.top -
+                            SizeApp.normalPadding * 2,
+                        child: Column(
+                          children: <Widget>[
+                            _statistics(),
+                            _chart(),
+                            // Placeholder()
+                          ],
+                        ),
                       ),
-                    )
-              // : const SizedBox(),
-              // ),
-              );
+                    ),
+                  ),
+          );
         },
       ),
-      // ),
     );
   }
 }

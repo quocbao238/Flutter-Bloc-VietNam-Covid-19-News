@@ -21,6 +21,7 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
   StatisticsBloc() : super(const StatisticsState()) {
     on<LoadEvent>(onLoadData);
     on<ChangeProvinceEvent>(onChangeProvince);
+    on<RefeshEvent>(onLoadData);
   }
 
   void onLoadData(StatisticsEvent event, Emitter<StatisticsState> emit) async {
@@ -42,6 +43,10 @@ class StatisticsBloc extends Bloc<StatisticsEvent, StatisticsState> {
     provinceSelected = lstProvince.first;
     emit(const LoadingSucessState());
   }
+
+  // void onRefesh(StatisticsEvent event, Emitter<StatisticsState> emit) {
+  //   onLoadData();
+  // }
 
   void onChangeProvince(
       ChangeProvinceEvent event, Emitter<StatisticsState> emit) async {
