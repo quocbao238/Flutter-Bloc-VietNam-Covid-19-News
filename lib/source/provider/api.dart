@@ -89,7 +89,7 @@ class Api {
   // Lấy danh sách tin tức mới nhất về covid
   static Future<RssFeed?> getNewsCovid() async {
     try {
-      var url = Uri.parse('$urlNews');
+      var url = Uri.parse(urlNews);
       http.Response response = await http.get(url);
       String body = utf8.decode(response.bodyBytes);
       print(body.toString());
@@ -100,23 +100,27 @@ class Api {
   }
 
   static Future<List<NewsModel>> getListCovidNews() async {
-    Set<String> _filterCovid = {"ncov", "covid"};
     var rssFeed = await getNewsCovid();
     List<NewsModel> lstNews = [];
     try {
       if (rssFeed != null) {
         for (var item in rssFeed.items!) {
           // ignore: avoid_function_literals_in_foreach_calls
-          _filterCovid.forEach((element) {
-            if (!item.link!.toLowerCase().contains(element)) return;
-          });
-          NewsModel newsModel = NewsModel(
-              image: RssHelper.getImageFromFeed(item.description!),
-              link: item.link!.replaceAll('\'', ""),
-              pubDate: DateFormat('dd/MM/yyyy').format(item.pubDate!),
-              title: item.title!);
-          lstNews.add(newsModel);
+
+          if (item.link!.toLowerCase().contains("ncov") ||
+              item.link!.toLowerCase().contains("covid")) {
+            lstNews.add(NewsModel(
+                image: RssHelper.getImageFromFeed(item.description!),
+                link: item.link!.replaceAll('\'', ""),
+                pubDate: DateFormat('dd/MM/yyyy').format(item.pubDate!),
+                title: item.title!));
+          }
         }
+      }
+
+      for (int index = 0; index < 6; index++) {
+        lstNews[index].image = RssHelper.changeSizeImage(
+            imageUrl: lstNews[index].image, width: 200, height: 80);
       }
     } catch (e) {}
     print(lstNews);

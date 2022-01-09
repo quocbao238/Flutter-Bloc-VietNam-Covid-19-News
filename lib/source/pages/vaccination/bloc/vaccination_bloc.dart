@@ -15,12 +15,20 @@ class VaccinationBloc extends Bloc<VaccinationEvent, VaccinationState> {
 
   VaccinationBloc() : super(const VaccinationState()) {
     on<LoadEvent>(onLoadData);
+    on<RefeshEvent>(onRefesh);
     on<SearchProvinceEvent>(onSearchProvince);
     on<ChangeVaccinViewEvent>(onChangeVaccinView);
     on<ReverseAnimationEvent>(onHandelAnimation);
   }
 
   void onLoadData(LoadEvent event, Emitter<VaccinationState> emit) async {
+    emit(const LoadingState());
+    lstProvince = await Api.getAllPatientProvinces();
+    lstSearchProvince.addAll(lstProvince);
+    emit(const LoadingSucessState());
+  }
+
+  void onRefesh(RefeshEvent event, Emitter<VaccinationState> emit) async {
     emit(const LoadingState());
     lstProvince = await Api.getAllPatientProvinces();
     lstSearchProvince.addAll(lstProvince);

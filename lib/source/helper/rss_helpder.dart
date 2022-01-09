@@ -11,7 +11,6 @@ class RssHelper {
     int indexEnd = imageUrl.indexOf('Uploaded') - 1;
     String newSize = "${height}x$width";
     String reuslt = imageUrl.replaceRange(27, indexEnd, newSize);
-    print(reuslt);
-    return "";
+    return reuslt;
   }
 }

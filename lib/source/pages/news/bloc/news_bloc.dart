@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:vietnamcovidtracking/source/helper/rss_helpder.dart';
 import 'package:vietnamcovidtracking/source/models/news_model.dart';
 import 'package:vietnamcovidtracking/source/provider/api.dart';
 part 'news_event.dart';
@@ -11,6 +10,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
 
   NewsBloc() : super(const NewsState()) {
     on<LoadEvent>(onLoadData);
+    on<RefeshEvent>(onRefesh);
   }
 
   void onLoadData(LoadEvent event, Emitter<NewsState> emit) async {
@@ -20,13 +20,17 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
       emit(const LoadingSucessState());
       return;
     }
+    emit(const LoadingSucessState());
+  }
 
-    // // Resize 5 item hình -> size lớn để chạy ở header
-    // for (int i = 0; i < 6; i++) {
-    //   lstNews[i].image = RssHelper.changeSizeImage(
-    //       imageUrl: lstNews[i].image, width: 120, height: 80);
-    // }
-
+  Future<void> onRefesh(RefeshEvent event, Emitter<NewsState> emit) async {
+    lstNews.clear();
+    emit(const LoadingState());
+    lstNews = await Api.getListCovidNews();
+    if (lstNews.isEmpty) {
+      emit(const LoadingSucessState());
+      return;
+    }
     emit(const LoadingSucessState());
   }
 }
