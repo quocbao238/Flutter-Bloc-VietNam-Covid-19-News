@@ -30,9 +30,9 @@
 
 ### Screenshot
 
-<img src="https://github.com/quocbao238/VietNam-Covid-19-News/blob/main/screenshot/banner1.png/>
+<img src="https://raw.githubusercontent.com/quocbao238/VietNam-Covid-19-News/main/screenshot/banner1.png>
 
-<img src="https://github.com/quocbao238/VietNam-Covid-19-News/blob/main/screenshot/banner2.png/>
+<img src="https://raw.githubusercontent.com/quocbao238/VietNam-Covid-19-News/main/screenshot/banner2.png>
 
 ### Documenttation style & source
 
