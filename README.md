@@ -1,16 +1,42 @@
-# vietnamcovidtracking
+# VietNam-Covid-19-News App - Flutte-Bloc 8.0.0
 
-A new Flutter project.
+* VietNam-Covid-19-News App create by Flutter use BLoc
 
-## Getting Started
+* I have developed this app all by myself and I would be happy to share the APK of the app for testing purposes
+* Hope you like it 👍. Give me a star if you like it ⭐
 
-This project is a starting point for a Flutter application.
+### Dowload
+[![Try in PWD](https://i.pinimg.com/originals/01/d9/53/01d95329a419f52751f875daf9d0f1aa.png)](https://github.com/quocbao238/Flutter-GetX-Pattern-Covid19-News-App/raw/main/apk/app-release.apk)
 
-A few resources to get you started if this is your first Flutter project:
+### Feature
+-   flutter_bloc: 8.0.0
+-   carousel_slider
+-   cached_network_image
+-   flutter_webview_plugin
+-   tiengviet
+-   carousel_slider
+-   syncfusion_flutter_maps
+-   syncfusion_flutter_charts
+-   flutter_spinkit
+-   Api Covid ThanhNien (https://thanhnien.vn/toan-canh-covid-19-tin-tuc-so-lieu-phan-tich-post984159.html)
+-   RSS ThanhNien 
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Attractions
+-   Total Covid Case, Death, Recovered in VietNam
+-   Read News Covid-19 in VietNam
+-   Statistics Vaccinations
+-   Vietnam COVID-19 Cases Chart by Provinces 
+-   Vietnam COVID-19 Cases Map by Provinces 
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Screenshot
+
+<img src="https://github.com/quocbao238/VietNam-Covid-19-News/blob/main/screenshot/banner1.png/>
+
+<img src="https://github.com/quocbao238/VietNam-Covid-19-News/blob/main/screenshot/banner2.png/>
+
+### Documenttation style & source
+
+- https://www.behance.net/gallery/111256567/Covid-19-App-UI-Design-Concept
+- https://thanhnien.vn/toan-canh-covid-19-tin-tuc-so-lieu-phan-tich-post984159.html
+- https://pub.dev/packages/floating_action_bubble
+
