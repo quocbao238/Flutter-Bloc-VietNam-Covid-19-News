@@ -115,16 +115,16 @@ class Properties {
   String hasc1;
 
   factory Properties.fromJson(Map<String, dynamic> json) => Properties(
-        gid0: gid0Values.map[json["GID_0"]]!,
-        name0: name0Values.map[json["NAME_0"]]!,
-        gid1: json["GID_1"],
-        name1: json["NAME_1"],
-        varname1: json["VARNAME_1"],
-        nlName1: json["NL_NAME_1"],
-        type1: type1Values.map[json["TYPE_1"]]!,
-        engtype1: engtype1Values.map[json["ENGTYPE_1"]]!,
-        cc1: json["CC_1"],
-        hasc1: json["HASC_1"],
+        gid0: gid0Values.map[json["GID_0"]] ?? Gid0.VNM,
+        name0: name0Values.map[json["NAME_0"]] ?? Name0.VIETNAM,
+        gid1: json["GID_1"] ?? "",
+        name1: json["NAME_1"] ?? "",
+        varname1: json["VARNAME_1"] ?? "",
+        nlName1: json["NL_NAME_1"] ?? "",
+        type1: type1Values.map[json["TYPE_1"]] ?? Type1.THNH_PH,
+        engtype1: engtype1Values.map[json["ENGTYPE_1"]] ?? Engtype1.PROVINCE,
+        cc1: json["CC_1"] ?? "",
+        hasc1: json["HASC_1"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

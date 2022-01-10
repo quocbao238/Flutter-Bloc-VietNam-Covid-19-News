@@ -24,6 +24,12 @@ class SearchState extends MapState {
   List<Object> get props => [];
 }
 
+class ShowWarningState extends MapState {
+  const ShowWarningState();
+  @override
+  List<Object> get props => [];
+}
+
 class LoadingSucessState extends MapState {
   const LoadingSucessState();
   @override

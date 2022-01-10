@@ -42,21 +42,11 @@ class BubbleMenu extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Flexible(
-            child: Text(
-              item.title,
-              overflow: TextOverflow.ellipsis,
-              style: item.titleStyle,
-            ),
+            child: Text(item.title,
+                overflow: TextOverflow.ellipsis, style: item.titleStyle),
           ),
-          const SizedBox(
-            width: 10.0,
-          ),
-          item.icon != null
-              ? Icon(
-                  item.icon,
-                  color: item.iconColor,
-                )
-              : Container(),
+          const SizedBox(width: 10.0),
+          Icon(item.icon, color: item.iconColor)
         ],
       ),
     );
@@ -132,15 +122,15 @@ class FloatingActionBubble extends AnimatedWidget {
           ignoring: _animation.value == 0,
           child: ListView.separated(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            separatorBuilder: (_, __) => SizedBox(height: 12.0),
-            padding: EdgeInsets.only(top: 12, bottom: 12, left: 32),
+            physics: const NeverScrollableScrollPhysics(),
+            separatorBuilder: (_, __) => const SizedBox(height: 12.0),
+            padding: const EdgeInsets.only(top: 12, bottom: 12, left: 32),
             itemCount: items.length,
             itemBuilder: buildItem,
           ),
         ),
         FloatingActionButton(
-          heroTag: herotag == null ? const _DefaultHeroTag() : herotag,
+          heroTag: herotag ?? const _DefaultHeroTag(),
           backgroundColor: backGroundColor,
           // iconData is mutually exclusive with animatedIconData
           // only 1 can be null at the time

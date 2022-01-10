@@ -7,8 +7,9 @@ import 'package:vietnamcovidtracking/source/models/models.dart';
 import 'package:vietnamcovidtracking/source/pages/tabs/bloc/tabpage_bloc.dart';
 
 class TabsPage extends StatefulWidget {
+  final Function? drawerTap;
   static const String routeName = "/tabsPage";
-  const TabsPage({Key? key}) : super(key: key);
+  const TabsPage({Key? key, this.drawerTap}) : super(key: key);
 
   @override
   _TabsPageState createState() => _TabsPageState();
@@ -63,17 +64,16 @@ class _TabsPageState extends State<TabsPage> {
               //       .headline2!
               //       .copyWith(color: Colors.white),
               // ),
-              // leading: IconButton(
-              //   icon: const Icon(LineIcons.equals),
-              //   // onPressed: () => _tabsKey.currentState!.openDrawer(),
-              // ),
+              leading: IconButton(
+                icon: const Icon(Icons.menu),
+                onPressed: () => widget.drawerTap!(),
+              ),
               // actions: [
               //   IconButton(
               //       icon: const Icon(LineIcons.bell, size: 30.0),
               //       onPressed: () {})
               // ],
             ),
-            drawer: const Drawer(),
             body: _body(state, context),
             bottomNavigationBar: _bottomNavigationBar(state, context),
           );

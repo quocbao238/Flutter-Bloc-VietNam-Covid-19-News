@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vietnamcovidtracking/source/models/news_model.dart';
+import 'package:vietnamcovidtracking/source/pages/drawer/view/drawer_page.dart';
 import 'package:vietnamcovidtracking/source/pages/news_detail/news_detail.dart';
 import 'package:vietnamcovidtracking/source/pages/tabs/view/tabs_page.dart';
 
@@ -9,8 +10,8 @@ class AppRoutes {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (_) => const TabsPage(),
-          settings: const RouteSettings(name: TabsPage.routeName),
+          builder: (_) => const DrawerPage(),
+          settings: const RouteSettings(name: DrawerPage.routeName),
         );
       case TabsPage.routeName:
         return MaterialPageRoute(

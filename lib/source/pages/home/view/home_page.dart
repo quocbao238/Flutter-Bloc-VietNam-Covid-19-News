@@ -4,7 +4,6 @@ import 'package:line_icons/line_icons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vietnamcovidtracking/source/config/size_app.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = "/homePage";
@@ -23,36 +22,38 @@ class _HomePageState extends State<HomePage> {
           required IconData icon,
           required Function onTap,
           required Color backgroundcolor}) {
-        return TextButton(
-          onPressed: () => onTap(),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 24, color: Colors.white),
-              const SizedBox(width: 4.0),
-              Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: Colors.white),
-              ),
-            ],
-          ),
-          style: ButtonStyle(
-            fixedSize: MaterialStateProperty.all(
-                Size(MediaQuery.of(context).size.width * 0.45, 54)),
-            padding: MaterialStateProperty.all(
-                const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 12)),
-            backgroundColor:
-                MaterialStateProperty.all(backgroundcolor), //Background Color
-            elevation: MaterialStateProperty.all(6), //Defines Elevation
-            shadowColor: MaterialStateProperty.all(Colors.grey), //Define
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32.0),
-                // side: BorderSide(color: Colors.red),
+        return Flexible(
+          child: TextButton(
+            onPressed: () => onTap(),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, size: 24, color: Colors.white),
+                const SizedBox(width: 4.0),
+                Text(
+                  title,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline3!
+                      .copyWith(color: Colors.white),
+                ),
+              ],
+            ),
+            style: ButtonStyle(
+              fixedSize: MaterialStateProperty.all(
+                  Size(MediaQuery.of(context).size.width * 0.45, 54)),
+              padding: MaterialStateProperty.all(
+                  const EdgeInsets.only(left: 8, right: 8, top: 12, bottom: 12)),
+              backgroundColor:
+                  MaterialStateProperty.all(backgroundcolor), //Background Color
+              elevation: MaterialStateProperty.all(6), //Defines Elevation
+              shadowColor: MaterialStateProperty.all(Colors.grey), //Define
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                  // side: BorderSide(color: Colors.red),
+                ),
               ),
             ),
           ),
@@ -149,14 +150,15 @@ class _HomePageState extends State<HomePage> {
                                             Text("Thông báo",
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .headline2!),
-                                            Text("Tính năng đang phát triển",
-                                                style: Theme.of(context)
-                                                    .textTheme
                                                     .headline2!
                                                     .copyWith(
                                                         color: ThemePrimary
                                                             .primaryColor)),
+                                            const SizedBox(height: 8.0),
+                                            Text("Tính năng này đang phát triển",
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyText1!),
                                           ],
                                         )),
                                     Positioned(

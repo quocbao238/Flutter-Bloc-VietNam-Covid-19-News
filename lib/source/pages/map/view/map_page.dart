@@ -35,21 +35,38 @@ class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (context) => MapBloc()..add(const LoadEvent()),
-        child: BlocBuilder<MapBloc, MapState>(builder: (context, state) {
+      create: (context) => MapBloc()..add(const LoadEvent()),
+      child: BlocBuilder<MapBloc, MapState>(
+        builder: (context, state) {
           final bloc = BlocProvider.of<MapBloc>(context);
 
           Widget _title() {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              color: ThemePrimary.primaryColor,
-              padding: const EdgeInsets.only(
-                  left: SizeApp.normalPadding,
-                  right: SizeApp.normalPadding,
-                  bottom: SizeApp.normalPadding),
-              child: Text("Bản đồ vùng dịch",
-                  style: Theme.of(context).textTheme.headline2!.copyWith(
-                      overflow: TextOverflow.ellipsis, color: Colors.white)),
+            return InkWell(
+              onTap: () {
+                bloc.add(WarningMapEvent(context));
+              },
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                color: ThemePrimary.primaryColor,
+                padding: const EdgeInsets.only(
+                    left: SizeApp.normalPadding,
+                    right: SizeApp.normalPadding,
+                    bottom: SizeApp.normalPadding),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Bản đồ vùng dịch",
+                        style: Theme.of(context).textTheme.headline2!.copyWith(
+                            overflow: TextOverflow.ellipsis,
+                            color: Colors.white)),
+                    const Icon(
+                      Icons.warning,
+                      color: Colors.red,
+                    )
+                  ],
+                ),
+              ),
             );
           }
 
@@ -73,10 +90,6 @@ class _MapPageState extends State<MapPage> {
                   iconSize: const Size(14, 14),
                   textStyle: Theme.of(context).textTheme.bodyText1,
                 ),
-                // tooltipSettings: MapTooltipSettings(
-                //     color: ThemePrimary.primaryColor,
-                //     strokeColor: Colors.white,
-                //     strokeWidth: 2),
                 strokeColor: Colors.white,
                 strokeWidth: 1,
                 shapeTooltipBuilder: (BuildContext context, int index) {
@@ -95,28 +108,32 @@ class _MapPageState extends State<MapPage> {
           }
 
           return Scaffold(
-              key: _mapGlobalKey,
-              body: state is LoadingState
-                  ? const LoadingWidget()
-                  : RefreshIndicator(
-                      onRefresh: () async {
-                        bloc.add(const RefeshEvent());
-                      },
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          _title(),
-                          if (state is LoadingSucessState)
-                            Expanded(
-                              child: Container(
-                                  padding: EdgeInsets.only(top: 8),
-                                  child: _viewMap()),
-                            ),
-                        ],
-                      ),
-                    ));
-        }));
+            key: _mapGlobalKey,
+            body: state is LoadingState
+                ? const LoadingWidget()
+                : RefreshIndicator(
+                    onRefresh: () async {
+                      bloc.add(const RefeshEvent());
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _title(),
+                        if (state is LoadingSucessState)
+                          Expanded(
+                            child: Container(
+                                padding: const EdgeInsets.only(top: 8),
+                                // color: Colors.green,
+                                child: _viewMap()),
+                          ),
+                      ],
+                    ),
+                  ),
+          );
+        },
+      ),
+    );
   }
 }

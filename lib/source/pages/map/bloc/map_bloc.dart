@@ -59,6 +59,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
   MapBloc() : super(const MapState()) {
     on<LoadEvent>(onLoadData);
     on<RefeshEvent>(onRefresh);
+    on<WarningMapEvent>(onWarningMap);
   }
 
   void onRefresh(RefeshEvent event, Emitter<MapState> emit) async {}
@@ -67,7 +68,7 @@ class MapBloc extends Bloc<MapEvent, MapState> {
     emit(const LoadingState());
     try {
       //start
-      String data = await rootBundle.loadString('assets/vietnam.json');
+      String data = await rootBundle.loadString('assets/maps/vietnam.json');
       var jsonResult = json.decode(data);
       // List thứ nhất parse từ json local
       MapModelAsset _mapModel = MapModelAsset.fromJson(jsonResult);
@@ -100,45 +101,91 @@ class MapBloc extends Bloc<MapEvent, MapState> {
           }
         }
       });
-    } catch (e) {}
-    mapSource = MapShapeSource.asset('assets/vietnam.json',
-        shapeDataField: "NAME_1",
-        dataCount: listMapModel.length,
-        primaryValueMapper: (int index) => listMapModel[index].title,
-        shapeColorValueMapper: (int index) =>
-            listMapModel[index].total.toDouble(),
-        shapeColorMappers: _shapeColorMappers);
+      mapSource = MapShapeSource.asset('assets/maps/vietnam.json',
+          shapeDataField: "NAME_1",
+          dataCount: listMapModel.length,
+          primaryValueMapper: (int index) => listMapModel[index].title,
+          shapeColorValueMapper: (int index) =>
+              listMapModel[index].total.toDouble(),
+          shapeColorMappers: _shapeColorMappers);
+    } catch (e) {
+      mapSource = const MapShapeSource.asset('assets/maps/vietnam.json',
+          shapeDataField: "NAME_1");
+    }
 
     emit(const LoadingSucessState());
   }
 
-  // Future<void> onChangeMapListEvent(
-  //     ChangeMapListEvent event, Emitter<MapState> emit) async {
-  //   emit(const LoadingListData());
-  //   // lstProvince.clear();
-  //   lstSearchProvince.clear();
-  //   isViewMap = event.isViewMap;
-  //   if (lstProvince.isEmpty) {
-  //     lstProvince = await Api.getAllPatientProvinces();
-  //   }
-  //   lstSearchProvince.addAll(lstProvince);
-  //   emit(const LoadingSucessState());
-  // }
-
-  // void onSearchProvince(SearchProvinceEvent event, Emitter<MapState> emit) {
-  //   emit(const SearchState());
-  //   if (lstProvince.isEmpty) emit(const LoadingSucessState());
-  //   String _keySearch = TiengViet.parse(event.keySearch).toLowerCase();
-  //   lstSearchProvince.clear();
-  //   if (_keySearch.isEmpty) {
-  //     lstSearchProvince.addAll(lstProvince);
-  //   } else {
-  //     lstSearchProvince = lstProvince
-  //         .where((element) => TiengViet.parse(element.title!)
-  //             .toLowerCase()
-  //             .contains(_keySearch))
-  //         .toList();
-  //   }
-  //   emit(const LoadingSucessState());
-  // }
+  onWarningMap(WarningMapEvent event, Emitter<MapState> emit) async {
+    showDialog(
+        context: event.context,
+        builder: (context) {
+          return Dialog(
+              backgroundColor: Colors.transparent,
+              insetPadding: const EdgeInsets.only(
+                  top: 10, bottom: 10, left: 32, right: 8),
+              child: Stack(
+                // ignore: deprecated_member_use
+                overflow: Overflow.visible,
+                alignment: Alignment.topCenter,
+                children: <Widget>[
+                  Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(right: 24.0, top: 40),
+                      height: 200.0,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: Colors.white),
+                      padding: const EdgeInsets.fromLTRB(10, 20, 10, 20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text("Thông báo",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .copyWith(color: ThemePrimary.primaryColor)),
+                          const SizedBox(height: 8.0),
+                          Text(
+                              "Vì mục đích chính là hiển thị thông tin số liệu ca nhiễm các tỉnh thành trên cả nước nên sẽ không hiển thị các \"Hải Đảo\" trên bản đồ.Mong các bạn thông cảm!",
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyText1!),
+                        ],
+                      )),
+                  Positioned(
+                      top: 0,
+                      child: Container(
+                          height: 60,
+                          width: 60,
+                          margin: const EdgeInsets.only(right: 24),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: ThemePrimary.primaryColor),
+                          child: const Center(
+                              child: Icon(
+                            Icons.warning,
+                            color: Colors.white,
+                            size: 34,
+                          )))),
+                  Positioned(
+                      top: 0,
+                      right: 0,
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(100),
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Ink(
+                          padding: const EdgeInsets.all(4.0),
+                          height: 40,
+                          width: 40,
+                          decoration: const BoxDecoration(
+                              color: Colors.red, shape: BoxShape.circle),
+                          child: const Icon(Icons.clear, color: Colors.white),
+                        ),
+                      ))
+                ],
+              ));
+        });
+  }
 }
