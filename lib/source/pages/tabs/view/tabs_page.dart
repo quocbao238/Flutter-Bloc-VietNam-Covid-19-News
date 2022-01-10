@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
 import 'package:vietnamcovidtracking/source/models/models.dart';
+import 'package:vietnamcovidtracking/source/pages/drawer/bloc/drawer_bloc.dart';
 import 'package:vietnamcovidtracking/source/pages/tabs/bloc/tabpage_bloc.dart';
 
 class TabsPage extends StatefulWidget {
-  final Function? drawerTap;
+  final Function(int indexPage)? drawerTap;
   static const String routeName = "/tabsPage";
   const TabsPage({Key? key, this.drawerTap}) : super(key: key);
 
@@ -16,7 +16,7 @@ class TabsPage extends StatefulWidget {
 }
 
 class _TabsPageState extends State<TabsPage> {
-  // final GlobalKey<ScaffoldState> _tabsKey = GlobalKey(); // Create a key
+  final GlobalKey<ScaffoldState> tabsKey = GlobalKey(); // Create a key
 
   Widget _body(TabPageState state, BuildContext context) {
     return IndexedStack(
@@ -51,31 +51,28 @@ class _TabsPageState extends State<TabsPage> {
       create: (context) => TabPageBloc(),
       child: BlocBuilder<TabPageBloc, TabPageState>(
         builder: (context, state) {
-          return Scaffold(
-            // key: _tabsKey,
-            appBar: AppBar(
-              backgroundColor: ThemePrimary.primaryColor,
-              elevation: 0,
-              centerTitle: true,
-              // title: Text(
-              //   bloc.title,
-              //   style: Theme.of(context)
-              //       .textTheme
-              //       .headline2!
-              //       .copyWith(color: Colors.white),
-              // ),
-              leading: IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => widget.drawerTap!(),
+          return BlocListener<DrawerBloc, DrawerState>(
+            listener: (drawercontext, drawerState) {
+              if (drawerState is MenuCloseState) {
+                context
+                    .read<TabPageBloc>()
+                    .add(ChangeTabEvent(newIndex: drawerState.newIndex));
+              }
+            },
+            child: Scaffold(
+              key: tabsKey,
+              appBar: AppBar(
+                backgroundColor: ThemePrimary.primaryColor,
+                elevation: 0,
+                centerTitle: true,
+                leading: IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () => widget.drawerTap!(state.index),
+                ),
               ),
-              // actions: [
-              //   IconButton(
-              //       icon: const Icon(LineIcons.bell, size: 30.0),
-              //       onPressed: () {})
-              // ],
+              body: _body(state, context),
+              bottomNavigationBar: _bottomNavigationBar(state, context),
             ),
-            body: _body(state, context),
-            bottomNavigationBar: _bottomNavigationBar(state, context),
           );
         },
       ),

@@ -9,5 +9,6 @@ abstract class DrawerEvent extends Equatable {
 
 class MenuEvent extends DrawerEvent {
   final bool isCollapsed;
-  const MenuEvent(this.isCollapsed);
+  final int newIndex;
+  const MenuEvent(this.isCollapsed, this.newIndex);
 }

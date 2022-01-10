@@ -6,7 +6,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:vietnamcovidtracking/source/config/size_app.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
 import 'package:vietnamcovidtracking/source/pages/news/bloc/news_bloc.dart';
-import 'package:vietnamcovidtracking/source/pages/news_detail/news_detail.dart';
 
 class NewsPage extends StatefulWidget {
   static const String routeName = "/newsPage";

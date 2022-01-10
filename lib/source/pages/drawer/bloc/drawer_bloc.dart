@@ -5,9 +5,13 @@ part 'drawer_event.dart';
 part 'drawer_state.dart';
 
 class DrawerBloc extends Bloc<DrawerEvent, DrawerState> {
-  DrawerBloc() : super(DrawerInitial()) {
+  int currentPageIndex = 0;
+
+  DrawerBloc() : super(const DrawerState()) {
     on<MenuEvent>((event, emit) {
-      emit(event.isCollapsed ? MeunuOpenState() : MenuCloseState());
+      emit(event.isCollapsed
+          ? MeunuOpenState(newIndex: event.newIndex)
+          : MenuCloseState(newIndex: event.newIndex));
     });
   }
 }

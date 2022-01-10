@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:vietnamcovidtracking/source/models/menu.dart';
-
 part 'tabpage_event.dart';
 part 'tabpage_state.dart';
 

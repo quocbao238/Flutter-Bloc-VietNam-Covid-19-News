@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:syncfusion_flutter_maps/maps.dart';
-import 'package:tiengviet/tiengviet.dart';
 import 'package:vietnamcovidtracking/source/config/theme_app.dart';
 import 'package:vietnamcovidtracking/source/models/map_model.dart';
 import 'package:vietnamcovidtracking/source/models/province_map_model.dart';

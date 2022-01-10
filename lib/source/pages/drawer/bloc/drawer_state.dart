@@ -1,14 +1,21 @@
 part of 'drawer_bloc.dart';
 
-abstract class DrawerState extends Equatable {
+class DrawerState extends Equatable {
   const DrawerState();
-
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-class DrawerInitial extends DrawerState {}
+class MenuCloseState extends DrawerState {
+  final int newIndex;
+  const MenuCloseState({required this.newIndex});
+  @override
+  List<Object> get props => [newIndex];
+}
 
-class MenuCloseState extends DrawerState {}
-
-class MeunuOpenState extends DrawerState {}
+class MeunuOpenState extends DrawerState {
+  final int newIndex;
+  const MeunuOpenState({required this.newIndex});
+  @override
+  List<Object> get props => [newIndex];
+}
