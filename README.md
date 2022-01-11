@@ -1,4 +1,4 @@
-# VietNam-Covid-19-News App - Flutte-Bloc 8.0.0
+# VietNam-Covid-19-News App - Flutter-Bloc 8.0.0
 
 * VietNam-Covid-19-News App create by Flutter version 2.8.1 && flutter_bloc version 8.0.0
 * I have developed this app all by myself and I would be happy to share the APK of the app for testing purposes
